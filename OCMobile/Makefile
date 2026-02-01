@@ -9,8 +9,8 @@ sources := loader.c \
 	ACPIParser.c \
 	Platform/plist/plist.c \
 	Platform/OpenPartitionDxe/Gpt.c \
-	Platform/OpenPartitionDxe/Mbr.c \
-	Platform/Kextld.c
+	Platform/OpenPartitionDxe/Mbr.c
+#	Platform/Kextld.c
 
 
 
