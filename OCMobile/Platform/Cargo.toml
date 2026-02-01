@@ -1,0 +1,9 @@
+[package]
+name = "Platform"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+mach-o = "0.5.0" # Or a more recent compatible version
+cpython = "0.2.0"
+ratatui = "0.25.0" # Or a more recent compatible version
