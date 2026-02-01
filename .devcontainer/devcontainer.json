@@ -1,0 +1,19 @@
+{
+  "name": "PocketDarwin Codespace",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/nix:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "numtide.nix-nixpkgs",
+        "arrterian.nix-ide",
+        "ms-vscode.cpptools"
+      ]
+    }
+  },
+  "postCreateCommand": "echo 'Nix feature should be available. Run \"nix --version\" and then \"nix develop\" to enter the dev shell.'",
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspaces/PocketDarwin"
+}
