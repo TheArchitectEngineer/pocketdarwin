@@ -1,9 +1,0 @@
-[submodule "Kernel"]
-	path = Kernel
-	url = https://github.com/apple-oss-distributions/xnu
-[submodule "Userland/coreutils"]
-	path = Userland/coreutils
-	url = https://github.com/coreutils/coreutils
-[submodule "External/ravynOS"]
-	path = External/ravynOS
-	url = https://github.com/ravynsoft/ravynos

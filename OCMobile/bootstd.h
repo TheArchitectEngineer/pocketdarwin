@@ -107,6 +107,20 @@ size_t fs_read(file_t *file, void *buf, size_t size);
 void fs_close(file_t *file);
 
 /* =========================
+ *  Block Device
+ * ========================= */
+
+typedef struct {
+    void *impl;   /* opaque block device handle */
+} block_dev_t;
+
+/* Open block device */
+int block_open(block_dev_t *dev, const char *path);
+
+/* Read sectors from block device */
+size_t block_read(block_dev_t *dev, u64 lba, void *buf, size_t sectors);
+
+/* =========================
  *  Memory
  * ========================= */
 

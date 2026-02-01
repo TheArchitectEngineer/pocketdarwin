@@ -41,9 +41,8 @@ void boot_main(uint64_t magic, void *params) {
     ocm_console_putc('M');
     ocm_console_putc('\n');
 
-    /* explicit stop: nothing else exists yet */
-    ocm_panic("OCM: prototype loader reached");
-//    boot_menu_summon();
+    /* summon the boot menu */
+    boot_menu_summon();
 }
 
 /* =========================================================

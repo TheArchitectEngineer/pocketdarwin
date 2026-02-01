@@ -1,0 +1,67 @@
+diff --git a/iokit/IOKit/IOService.h b/iokit/IOKit/IOService.h
+index 1234567..abcdef0 100644
+--- a/iokit/IOKit/IOService.h
++++ b/iokit/IOKit/IOService.h
+@@ -50,6 +50,10 @@ class IOService : public IORegistryEntry
+     virtual bool start(IOService *provider) override;
+     virtual void stop(IOService *provider) override;
+ 
++    // PocketDarwin: USB UART support
++    virtual IOReturn usbUartInit(void);
++    virtual void usbUartPutc(char c);
++
+ protected:
+     // ... existing code
+ };
+diff --git a/iokit/Kernel/IOKitKernel.cpp b/iokit/Kernel/IOKitKernel.cpp
+index 1234567..abcdef0 100644
+--- a/iokit/Kernel/IOKitKernel.cpp
++++ b/iokit/Kernel/IOKitKernel.cpp
+@@ -100,6 +100,25 @@ bool IOService::start(IOService *provider)
+     return true;
+ }
+ 
++// PocketDarwin: USB UART implementation
++IOReturn IOService::usbUartInit(void)
++{
++    // Initialize USB serial device
++    // Find USB controller, create serial interface
++    usb_serial = IOUSBDevice::findDevice("Android USB Serial");
++    if (usb_serial) {
++        usb_serial->open(this);
++        IOLog("PocketDarwin: USB UART initialized\n");
++        return kIOReturnSuccess;
++    }
++    return kIOReturnNotFound;
++}
++
++void IOService::usbUartPutc(char c)
++{
++    if (usb_serial) {
++        usb_serial->write(&c, 1);
++    }
++}
++
+ void IOService::stop(IOService *provider)
+ {
+     // ... existing code
+diff --git a/osfmk/console/serial_console.c b/osfmk/console/serial_console.c
+index 1234567..abcdef0 100644
+--- a/osfmk/console/serial_console.c
++++ b/osfmk/console/serial_console.c
+@@ -50,6 +50,15 @@ void serial_putc(char c)
+     // UART putc
+     uart_putc(c);
++
++    // PocketDarwin: Also output to USB UART
++    if (usb_uart_enabled) {
++        IOService::usbUartPutc(c);
++    }
++}
++
++static bool usb_uart_enabled = false;
++
++void enable_usb_uart(void)
++{
++    usb_uart_enabled = (IOService::usbUartInit() == kIOReturnSuccess);
+ }
