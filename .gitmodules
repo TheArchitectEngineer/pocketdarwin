@@ -1,0 +1,3 @@
+[submodule "OCMobile/EFIDroid"]
+	path = OCMobile/EFIDroid
+	url = https://github.com/efidroid/build.git
