@@ -1,0 +1,19 @@
+{
+  "CanonicalName": "pocketdarwin",
+  "DisplayName": "PocketDarwin",
+  "Version": "0.1",
+  "DefaultDeploymentTarget": "1.0",
+  "MinimumDeploymentTarget": "1.0",
+  "MaximumDeploymentTarget": "99.0",
+  "DefaultProperties": {
+    "PLATFORM_NAME": "pocketdarwin",
+    "PLATFORM_DISPLAY_NAME": "PocketDarwin",
+    "SDK_NAME": "pocketdarwin",
+    "SDK_PRODUCT_BUILD_VERSION": "0.1",
+    "SDK_VERSION": "0.1",
+    "ARCHS": "arm64",
+    "VALID_ARCHS": "arm64",
+    "SUPPORTED_PLATFORMS": "pocketdarwin",
+    "SDKROOT": "pocketdarwin"
+  }
+}

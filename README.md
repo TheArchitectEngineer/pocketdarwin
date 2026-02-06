@@ -12,6 +12,69 @@ PocketDarwin is an experiment to boot Darwin on Android hardware.
 - Expect breakage, missing features, and frequent changes.
 - Do not use on devices you rely on; it may soft‑brick or require full reflashing.
 
+## SDKs & Toolchains
+SDKs and toolchains live under `Developer/SDKs/`. The layout is Xcode‑compatible on macOS and mirrored for cross‑platform builds.
+
+Quick view:
+```
+Developer/SDKs/
+  PocketDarwin.sdk/
+  Toolchains/PocketDarwin.toolchain/
+```
+
+Details: see `Developer/SDKs/README.md`.
+Quick build with CMake:
+```sh
+cmake -DCMAKE_TOOLCHAIN_FILE=Developer/SDKs/Toolchains/pocketdarwin.toolchain.cmake ..
+```
+Populate the sysroot (headers/libs):
+```sh
+Developer/SDKs/scripts/populate_sysroot.sh /path/to/headers /path/to/libs
+```
+Validate the sysroot:
+```sh
+Developer/SDKs/scripts/validate_sysroot.sh
+```
+Quick hello-world build:
+```sh
+Developer/SDKs/scripts/hello_build.sh /tmp/pd-hello
+```
+Cross-platform helpers:
+```sh
+Developer/SDKs/scripts/pd_cc.sh
+Developer/SDKs/scripts/pd_cxx.sh
+Developer/SDKs/scripts/pd_ld.sh
+```
+Toolchain env helper:
+```sh
+source Developer/SDKs/scripts/pd_env.sh
+```
+Toolchain path helper:
+```sh
+Developer/SDKs/scripts/pd_toolchain_path.sh
+```
+pkg-config env helper:
+```sh
+source Developer/SDKs/scripts/pd_pkgconfig_env.sh
+```
+Set SDK version:
+```sh
+Developer/SDKs/scripts/set_sdk_version.sh 0.1
+```
+Target preset:
+```sh
+source Developer/SDKs/scripts/pd_target_env.sh arm64
+```
+Sysroot manifest:
+```sh
+Developer/SDKs/scripts/sysroot_manifest.sh
+Developer/SDKs/scripts/verify_sysroot.sh
+```
+Toolchain smoke test:
+```sh
+Developer/SDKs/scripts/toolchain_smoke_test.sh /tmp/pd-smoke
+```
+
 ## Interlude (Linux Boot Loader)
 Interlude runs on the device to boot the Darwin kernel. It is a minimal Android Linux kernel build, just enough to bring up Darwin, and it is started automatically by `init`.
 
