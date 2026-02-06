@@ -1,0 +1,12 @@
+# Minimal init.rc snippet to start the uefi compatibility shim as a service.
+# Merge or include this snippet into your ramdisk's init configuration.
+
+service uefi_compat /uefi/compat
+    class core
+    user root
+    group root
+    oneshot
+
+# start the shim early during boot; adjust event/property as needed for your device
+on early-init
+    start uefi_compat

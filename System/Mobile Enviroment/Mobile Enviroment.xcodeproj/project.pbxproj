@@ -1,0 +1,467 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A7746D62F3652A0009EDFB3 /* Mobile_ControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7746CF2F3652A0009EDFB3 /* Mobile_ControllerTests.m */; };
+		2A7746D72F3652A0009EDFB3 /* Mobile_Controller.docc in Sources */ = {isa = PBXBuildFile; fileRef = 2A7746CD2F3652A0009EDFB3 /* Mobile_Controller.docc */; };
+		2A7746EC2F366327009EDFB3 /* PocketDarwin.xctoolchain in Resources */ = {isa = PBXBuildFile; fileRef = 2A7746EB2F366327009EDFB3 /* PocketDarwin.xctoolchain */; };
+		2A7746F62F3665EF009EDFB3 /* plistEdit.mk in Resources */ = {isa = PBXBuildFile; fileRef = 2A7746EF2F3665EF009EDFB3 /* plistEdit.mk */; };
+		2A7746F72F3665EF009EDFB3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7746ED2F3665EF009EDFB3 /* main.m */; };
+		2A7747012F366884009EDFB3 /* Mobile_Controller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A7746E12F3652A2009EDFB3 /* Mobile_Controller.framework */; };
+		2A7747022F366884009EDFB3 /* Mobile_Controller.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A7746E12F3652A2009EDFB3 /* Mobile_Controller.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2A7746E02F3652A2009EDFB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A7746D12F3652A0009EDFB3 /* Mobile Controller.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2A7746B12F365250009EDFB3;
+			remoteInfo = "Mobile Controller";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2A7747032F366885009EDFB3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2A7747022F366884009EDFB3 /* Mobile_Controller.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2A7746A02F3651CD009EDFB3 /* Mobile Enviroment.SystemPkg */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mobile Enviroment.SystemPkg"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A7746CC2F3652A0009EDFB3 /* Mobile_Controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mobile_Controller.h; sourceTree = "<group>"; };
+		2A7746CD2F3652A0009EDFB3 /* Mobile_Controller.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Mobile_Controller.docc; sourceTree = "<group>"; };
+		2A7746CF2F3652A0009EDFB3 /* Mobile_ControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mobile_ControllerTests.m; sourceTree = "<group>"; };
+		2A7746D12F3652A0009EDFB3 /* Mobile Controller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "Mobile Controller.xcodeproj"; sourceTree = "<group>"; };
+		2A7746EB2F366327009EDFB3 /* PocketDarwin.xctoolchain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PocketDarwin.xctoolchain; sourceTree = "<group>"; };
+		2A7746ED2F3665EF009EDFB3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2A7746EE2F3665EF009EDFB3 /* plistEdit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = plistEdit.h; sourceTree = "<group>"; };
+		2A7746EF2F3665EF009EDFB3 /* plistEdit.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = plistEdit.mk; sourceTree = "<group>"; };
+		2A7746F82F3666BC009EDFB3 /* NSObject+OpenBundleObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+OpenBundleObject.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A77469D2F3651CD009EDFB3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A7747012F366884009EDFB3 /* Mobile_Controller.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2A7746972F3651CD009EDFB3 = {
+			isa = PBXGroup;
+			children = (
+				2A7746E42F3652F3009EDFB3 /* Toolchains */,
+				2A7746D32F3652A0009EDFB3 /* Frameworks */,
+				2A7746A12F3651CD009EDFB3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2A7746A12F3651CD009EDFB3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746A02F3651CD009EDFB3 /* Mobile Enviroment.SystemPkg */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A7746CE2F3652A0009EDFB3 /* Mobile Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746CC2F3652A0009EDFB3 /* Mobile_Controller.h */,
+				2A7746CD2F3652A0009EDFB3 /* Mobile_Controller.docc */,
+			);
+			path = "Mobile Controller";
+			sourceTree = "<group>";
+		};
+		2A7746D02F3652A0009EDFB3 /* Mobile ControllerTests */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746CF2F3652A0009EDFB3 /* Mobile_ControllerTests.m */,
+			);
+			path = "Mobile ControllerTests";
+			sourceTree = "<group>";
+		};
+		2A7746D22F3652A0009EDFB3 /* Mobile Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746CE2F3652A0009EDFB3 /* Mobile Controller */,
+				2A7746D02F3652A0009EDFB3 /* Mobile ControllerTests */,
+				2A7746D12F3652A0009EDFB3 /* Mobile Controller.xcodeproj */,
+			);
+			path = "Mobile Controller";
+			sourceTree = "<group>";
+		};
+		2A7746D32F3652A0009EDFB3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746D22F3652A0009EDFB3 /* Mobile Controller */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		2A7746D42F3652A0009EDFB3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746E12F3652A2009EDFB3 /* Mobile_Controller.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A7746E42F3652F3009EDFB3 /* Toolchains */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746EB2F366327009EDFB3 /* PocketDarwin.xctoolchain */,
+				2A7746F52F3665EF009EDFB3 /* usr */,
+			);
+			path = Toolchains;
+			sourceTree = "<group>";
+		};
+		2A7746F02F3665EF009EDFB3 /* plistEdit */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746ED2F3665EF009EDFB3 /* main.m */,
+				2A7746EE2F3665EF009EDFB3 /* plistEdit.h */,
+				2A7746EF2F3665EF009EDFB3 /* plistEdit.mk */,
+			);
+			path = plistEdit;
+			sourceTree = "<group>";
+		};
+		2A7746F12F3665EF009EDFB3 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746F02F3665EF009EDFB3 /* plistEdit */,
+				2A7746F82F3666BC009EDFB3 /* NSObject+OpenBundleObject.h */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
+		2A7746F22F3665EF009EDFB3 /* include */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		2A7746F32F3665EF009EDFB3 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		2A7746F42F3665EF009EDFB3 /* share */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = share;
+			sourceTree = "<group>";
+		};
+		2A7746F52F3665EF009EDFB3 /* usr */ = {
+			isa = PBXGroup;
+			children = (
+				2A7746F12F3665EF009EDFB3 /* bin */,
+				2A7746F22F3665EF009EDFB3 /* include */,
+				2A7746F32F3665EF009EDFB3 /* lib */,
+				2A7746F42F3665EF009EDFB3 /* share */,
+			);
+			path = usr;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2A77469F2F3651CD009EDFB3 /* Mobile Enviroment */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A7746A42F3651CD009EDFB3 /* Build configuration list for PBXNativeTarget "Mobile Enviroment" */;
+			buildPhases = (
+				2A77469C2F3651CD009EDFB3 /* Sources */,
+				2A77469D2F3651CD009EDFB3 /* Frameworks */,
+				2A77469E2F3651CD009EDFB3 /* Resources */,
+				2A7747032F366885009EDFB3 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Mobile Enviroment";
+			packageProductDependencies = (
+			);
+			productName = "Mobile Enviroment";
+			productReference = 2A7746A02F3651CD009EDFB3 /* Mobile Enviroment.SystemPkg */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A7746982F3651CD009EDFB3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					2A77469F2F3651CD009EDFB3 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = 2A77469B2F3651CD009EDFB3 /* Build configuration list for PBXProject "Mobile Enviroment" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2A7746972F3651CD009EDFB3;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 2A7746A12F3651CD009EDFB3 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2A7746D42F3652A0009EDFB3 /* Products */;
+					ProjectRef = 2A7746D12F3652A0009EDFB3 /* Mobile Controller.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				2A77469F2F3651CD009EDFB3 /* Mobile Enviroment */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		2A7746E12F3652A2009EDFB3 /* Mobile_Controller.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Mobile_Controller.framework;
+			remoteRef = 2A7746E02F3652A2009EDFB3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2A77469E2F3651CD009EDFB3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A7746F62F3665EF009EDFB3 /* plistEdit.mk in Resources */,
+				2A7746EC2F366327009EDFB3 /* PocketDarwin.xctoolchain in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2A77469C2F3651CD009EDFB3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A7746D62F3652A0009EDFB3 /* Mobile_ControllerTests.m in Sources */,
+				2A7746F72F3665EF009EDFB3 /* main.m in Sources */,
+				2A7746D72F3652A0009EDFB3 /* Mobile_Controller.docc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2A7746A22F3651CD009EDFB3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.8;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2A7746A32F3651CD009EDFB3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.8;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2A7746A52F3651CD009EDFB3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.pockerdarwin.Mobile-Enviroment";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = driverkit;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = SystemPkg;
+			};
+			name = Debug;
+		};
+		2A7746A62F3651CD009EDFB3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.pockerdarwin.Mobile-Enviroment";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = driverkit;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = SystemPkg;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2A77469B2F3651CD009EDFB3 /* Build configuration list for PBXProject "Mobile Enviroment" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A7746A22F3651CD009EDFB3 /* Debug */,
+				2A7746A32F3651CD009EDFB3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A7746A42F3651CD009EDFB3 /* Build configuration list for PBXNativeTarget "Mobile Enviroment" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A7746A52F3651CD009EDFB3 /* Debug */,
+				2A7746A62F3651CD009EDFB3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A7746982F3651CD009EDFB3 /* Project object */;
+}

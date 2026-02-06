@@ -1,0 +1,21 @@
+//
+//  AndroidDeviceGeneralController.iig
+//  AndroidDeviceGeneralController
+//
+//  Created by Oaky on 06/02/26.
+//
+
+#ifndef AndroidDeviceGeneralController_h
+#define AndroidDeviceGeneralController_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+
+class AndroidDeviceGeneralController: public IOService
+{
+public:
+    virtual kern_return_t
+    Start(IOService * provider) override;
+};
+
+#endif /* AndroidDeviceGeneralController_h */

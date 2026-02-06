@@ -1,0 +1,22 @@
+//
+//  AndroidDeviceGeneralControllerUserClient.h
+//  AndroidDeviceGeneralController
+//
+//  Created by Oaky on 06/02/26.
+//
+
+#ifndef AndroidDeviceGeneralControllerUserClient_h
+#define AndroidDeviceGeneralControllerUserClient_h
+
+#include <Availability.h>
+#include <DriverKit/IOUserClient.h>
+#include <DriverKit/OSDictionary.h>
+
+class AndroidDeviceGeneralControllerUserClient: public IOUserClient
+{
+public:
+    virtual kern_return_t Start(IOService * provider) override;
+    virtual kern_return_t CopyProperties(OSDictionary **properties);
+};
+
+#endif /* AndroidDeviceGeneralControllerUserClient_h */
