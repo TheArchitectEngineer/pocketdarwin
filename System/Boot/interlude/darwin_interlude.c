@@ -16,6 +16,20 @@
 static const char *default_config_path = "/sdcard/OCMobileConfig.json";
 static const char *default_usb_serial = "/dev/ttyACM0";
 
+static char *pd_strdup(const char *value) {
+    if (!value) {
+        return NULL;
+    }
+    size_t len = strlen(value);
+    char *out = (char *)malloc(len + 1);
+    if (!out) {
+        return NULL;
+    }
+    memcpy(out, value, len);
+    out[len] = '\0';
+    return out;
+}
+
 static void usage(const char *prog) {
     fprintf(stderr,
         "Usage: %s [--kernel <path>] [--config <path>] [--initrd <path>] [--cmdline <string>] [--dtb <path>] [--exec] [--dry-run]\n"
@@ -99,10 +113,10 @@ static void *read_file_blob(const char *path, size_t *out_size) {
 
 static char *append_bootargs(const char *base, const char *extra) {
     if (!extra || extra[0] == '\0') {
-        return base ? strdup(base) : NULL;
+        return base ? pd_strdup(base) : NULL;
     }
     if (!base || base[0] == '\0') {
-        return strdup(extra);
+        return pd_strdup(extra);
     }
     size_t base_len = strlen(base);
     size_t extra_len = strlen(extra);
@@ -138,7 +152,7 @@ static char *build_pd_bootargs(const L2D_BridgeResult *res) {
     if (offset < 0 || (size_t)offset >= sizeof(buf)) {
         return NULL;
     }
-    return strdup(buf);
+    return pd_strdup(buf);
 }
 
 static char *build_pd_storage_bootargs(const char *sd_root, const char *mobile_root, int allow_internal) {
@@ -165,7 +179,7 @@ static char *build_pd_storage_bootargs(const char *sd_root, const char *mobile_r
     if (offset == 0) {
         return NULL;
     }
-    return strdup(buf);
+    return pd_strdup(buf);
 }
 
 static bool is_linux(void) {
@@ -330,7 +344,7 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    char *bootargs = cmdline ? strdup(cmdline) : NULL;
+    char *bootargs = cmdline ? pd_strdup(cmdline) : NULL;
     if (dtb_path) {
 #if defined(L2D_USE_LIBFDT)
         size_t dtb_size = 0;

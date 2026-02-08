@@ -1,0 +1,54 @@
+KERNEL_SRC := $(CURDIR)/kernel_motorola_msm8916
+OUT        := $(CURDIR)/out
+
+ARCH          := arm64
+CROSS_COMPILE := aarch64-unknown-linux-gnu-
+
+KCFLAGS	      += -Wno-error -fno-stack-protector -D__GNUC__=8
+
+DEFCONFIG_CANDIDATES := \
+	harpia_defconfig \
+	msm8952_defconfig \
+	lineageos_harpia_defconfig \
+	vendor/harpia_defconfig \
+	msm_defconfig \
+	msm-perf_defconfig
+
+DEFCONFIG := $(firstword $(foreach cfg,$(DEFCONFIG_CANDIDATES), \
+	$(wildcard $(KERNEL_SRC)/arch/arm64/configs/$(cfg))))
+
+ifeq ($(DEFCONFIG),)
+$(error No suitable harpia defconfig found!)
+endif
+
+# strip path so "make" receives only the target name
+DEFCONFIG_TARGET := $(notdir $(DEFCONFIG))
+
+HOSTCFLAGS := -I$(brew --prefix libelf)/include
+HOSTLDFLAGS := -L$(brew --prefix libelf)/lib
+
+export HOSTCFLAGS
+export HOSTLDFLAGS
+
+
+.PHONY: all defconfig kernel clean
+
+all: kernel
+
+defconfig:
+	$(MAKE) -C $(KERNEL_SRC) \
+		O=$(OUT) \
+		ARCH=$(ARCH) \
+		CROSS_COMPILE=$(CROSS_COMPILE) \
+		$(DEFCONFIG_TARGET)
+
+kernel: defconfig
+	$(MAKE) -C $(KERNEL_SRC) \
+		O=$(OUT) \
+		ARCH=$(ARCH) \
+		CROSS_COMPILE=$(CROSS_COMPILE) \
+		-j$$(nproc)
+
+clean:
+	rm -rf $(OUT)
+

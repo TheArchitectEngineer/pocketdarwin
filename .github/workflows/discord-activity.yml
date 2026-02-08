@@ -1,0 +1,7 @@
+- name: Actions Status Discord
+  # You may pin to the exact commit or the version.
+ # uses: sarisia/actions-status-discord@eb045afee445dc055c18d3d90bd0f244fd062708
+  uses: sarisia/actions-status-discord@v1.16.0
+  with:
+    # Discord webhook endpoint. If not set, env.DISCORD_WEBHOOK will be used.
+    webhook: https://discord.com/api/webhooks/1470154721628127454/dKf9GI2DrCZbzK_MpUSMFFhkhhgiUp3M3ZCM7xxQOc-ixvx92fZystKWhbRh9oyh-iXT

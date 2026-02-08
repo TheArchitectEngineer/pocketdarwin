@@ -1,3 +1,4 @@
 {
-    "makefile.configureOnOpen": true
+    "makefile.configureOnOpen": true,
+    "cmake.sourceDirectory": "/Volumes/FileSystemMac/Developer/Projects/PocketDarwin/System"
 }

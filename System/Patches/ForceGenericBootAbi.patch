@@ -1,0 +1,17 @@
+diff --git a/pexpert/arm64/boot.h b/pexpert/arm64/boot.h
+index 3a1f2b7..e9c4d21 100644
+--- a/pexpert/arm64/boot.h
++++ b/pexpert/arm64/boot.h
+@@ -23,7 +23,11 @@
+ #ifndef _PEXPERT_ARM64_BOOT_H_
+ #define _PEXPERT_ARM64_BOOT_H_
+
+-#include <iBoot/boot_args_abi.h>
++/*
++ * We are not booted by iBoot.
++ * Use the generic Mach boot arguments ABI.
++ * This header comes from exported headers after running installhdrs
++ */
++#include <mach/boot_args.h>
+
+ #endif /* _PEXPERT_ARM64_BOOT_H_ */

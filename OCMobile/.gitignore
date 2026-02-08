@@ -1,7 +1,0 @@
-device_tree
-*.o
-ocmboot
-boot.img
-*.img
-*.dmg
-

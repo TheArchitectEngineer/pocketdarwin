@@ -1,0 +1,68 @@
+*** PocketDarwin DriverKit full patch + xnubuild.sh integration ***
+
+diff --git a/DriverKit/DriverKitRPCStubs.h b/DriverKit/DriverKitRPCStubs.h
+new file mode 100644
+index 0000000..6666666
+--- /dev/null
++++ b/DriverKit/DriverKitRPCStubs.h
+@@
++#pragma once
++
++#ifdef POCKETDARWIN
++
++// Stub for IORPCMessageFromMach to satisfy PocketDarwin builds
++typedef struct IORPCMessage IORPCMessage;
++
++static inline IORPCMessage* IORPCMessageFromMach(void* msg, bool b) {
++    (void)msg;
++    (void)b;
++    return NULL; // Stub does nothing
++}
++
++// Macro to silence "unused-but-set-variable" for 'ret'
++#define UNUSED_RET_VAR(kret) (void)(kret)
++
++#endif // POCKETDARWIN
++
+diff --git a/DriverKit/patch_include_pch.sh b/DriverKit/patch_include_pch.sh
+new file mode 100755
+index 0000000..7777777
+--- /dev/null
++++ b/DriverKit/patch_include_pch.sh
+@@
++#!/bin/bash
++# Patch DriverKit to include DriverKitRPCStubs.h via PCH
++
++PCH_FILE="DriverKitPCH.h"
++
++# Create a precompiled header for PocketDarwin if missing
++if [ ! -f "$PCH_FILE" ]; then
++    echo "#pragma once" > $PCH_FILE
++    echo "#ifdef POCKETDARWIN" >> $PCH_FILE
++    echo "#include \"DriverKitRPCStubs.h\"" >> $PCH_FILE
++    echo "#endif // POCKETDARWIN" >> $PCH_FILE
++    echo "Created $PCH_FILE"
++fi
++
++# Instructions to use PCH in XNU build
++echo "Include DriverKitPCH.h in XNU/DriverKit build via -include or GCC_PRECOMPILE_PREFIX_HEADER"
++
+diff --git a/xnubuild.sh b/xnubuild.sh
+index ffffff1..eeeeee2 100755
+--- a/xnubuild.sh
++++ b/xnubuild.sh
+@@
++# PocketDarwin build tweaks
++export POCKETDARWIN=1
++
++# Auto-patch DriverKit for PocketDarwin
++cd DriverKit
++./patch_include_pch.sh
++cd ..
++
++# Add XNU build flags
++export CFLAGS="$CFLAGS -include $PWD/DriverKit/DriverKitPCH.h -Wno-unused-but-set-variable"
++export CXXFLAGS="$CXXFLAGS -include $PWD/DriverKit/DriverKitPCH.h -Wno-unused-but-set-variable"
++
++# Continue your normal XNU build
++make -j$(sysctl -n hw.ncpu) ARCH_CONFIGS=ARM64 SDKROOT=$SDKROOT OBJROOT=$OBJROOT/arm64 DSTROOT=$DSTROOT/arm64 RC_DARWIN_KERNEL_VERSION=23.0.0

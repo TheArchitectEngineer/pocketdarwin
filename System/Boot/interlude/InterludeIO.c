@@ -12,6 +12,23 @@
 #include <termios.h>
 #include <unistd.h>
 
+#ifndef O_CLOEXEC
+#define O_CLOEXEC 0
+#endif
+
+#ifndef HAVE_CFMAKERAW
+static void pd_cfmakeraw(struct termios *tio) {
+    if (!tio) {
+        return;
+    }
+    tio->c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
+    tio->c_oflag &= ~OPOST;
+    tio->c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+    tio->c_cflag &= ~(CSIZE | PARENB);
+    tio->c_cflag |= CS8;
+}
+#endif
+
 static int open_usb_serial(const char *preferred_path) {
     if (preferred_path && preferred_path[0] != '\0') {
         int fd = open(preferred_path, O_RDWR | O_NOCTTY | O_CLOEXEC);
@@ -54,7 +71,11 @@ static void configure_serial(int fd) {
     if (tcgetattr(fd, &tio) != 0) {
         return;
     }
+#if defined(cfmakeraw) || defined(HAVE_CFMAKERAW)
     cfmakeraw(&tio);
+#else
+    pd_cfmakeraw(&tio);
+#endif
     cfsetispeed(&tio, B115200);
     cfsetospeed(&tio, B115200);
     tio.c_cflag |= (CLOCAL | CREAD);

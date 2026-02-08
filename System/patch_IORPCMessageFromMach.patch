@@ -1,0 +1,21 @@
+diff --git a/DriverKit/DriverKitRPCStubs.h b/DriverKit/DriverKitRPCStubs.h
+new file mode 100644
+index 0000000..6666666
+--- /dev/null
++++ b/DriverKit/DriverKitRPCStubs.h
+@@
++#pragma once
++
++#ifdef POCKETDARWIN
++
++typedef struct IORPCMessage IORPCMessage;
++
++static inline IORPCMessage* IORPCMessageFromMach(void* msg, bool b) {
++    (void)msg;
++    (void)b;
++    return NULL;
++}
++
++#define UNUSED_RET_VAR(kret) (void)(kret)
++
++#endif // POCKETDARWIN

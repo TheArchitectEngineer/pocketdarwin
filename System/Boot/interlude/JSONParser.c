@@ -12,6 +12,20 @@ typedef struct {
     size_t len;
 } JSONCursor;
 
+static char *pd_strdup(const char *value) {
+    if (!value) {
+        return NULL;
+    }
+    size_t len = strlen(value);
+    char *out = (char *)malloc(len + 1);
+    if (!out) {
+        return NULL;
+    }
+    memcpy(out, value, len);
+    out[len] = '\0';
+    return out;
+}
+
 static void set_error(char **error, const char *message) {
     if (!error) {
         return;
@@ -19,7 +33,7 @@ static void set_error(char **error, const char *message) {
     if (*error) {
         return;
     }
-    *error = strdup(message);
+    *error = pd_strdup(message);
 }
 
 static void skip_ws(JSONCursor *cur) {
@@ -542,17 +556,7 @@ double json_get_number(JSONValue *value, double default_value) {
 }
 
 static char *dup_string(const char *value) {
-    if (!value) {
-        return NULL;
-    }
-    size_t len = strlen(value);
-    char *out = (char *)malloc(len + 1);
-    if (!out) {
-        return NULL;
-    }
-    memcpy(out, value, len);
-    out[len] = '\0';
-    return out;
+    return pd_strdup(value);
 }
 
 char *oc_mobile_get_kernel_path(JSONValue *root) {
