@@ -1,0 +1,64 @@
+# ---- Build roots ----
+/build/
+/obj/
+/dst/
+/sym/
+
+# ---- XNU build output ----
+/xnu/BUILD/
+/xnu/obj/
+/xnu/dst/
+/xnu/sym/
+/xnu/Debug/
+/xnu/Release/
+
+# ---- Kernel binaries ----
+mach_kernel*
+kernel*
+*.kext/
+*.dSYM/
+*.ctf
+
+# ---- Intermediate files ----
+*.o
+*.a
+*.lo
+*.la
+*.so
+*.dylib
+*.ko
+*.mod
+*.cmd
+*.tmp
+
+# ---- Logs & caches ----
+*.log
+*.out
+*.trace
+*.cache
+*.swp
+*.swo
+
+# ---- Toolchain noise ----
+.ninja*
+compile_commands.json
+*.xcworkspace
+*.xcodeproj
+DerivedData/
+
+# ---- OS junk ----
+.DS_Store
+.AppleDouble
+.LSOverride
+__MACOSX/
+
+# ---- Editor noise ----
+.vscode/
+.idea/
+*.iml
+
+# ---- Patch & temp leftovers ----
+*.rej
+*.orig
+*~
+

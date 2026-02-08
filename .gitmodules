@@ -1,1 +1,4 @@
 
+[submodule "System/darwinKernel/xnu"]
+	path = System/darwinKernel/xnu
+	url = https://github.com/apple/darwin-xnu
