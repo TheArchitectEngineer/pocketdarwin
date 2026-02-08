@@ -1,40 +1,7 @@
-            - name: Actions Status Discord
+- name: Actions Status Discord
   # You may pin to the exact commit or the version.
-  # uses: sarisia/actions-status-discord@eb045afee445dc055c18d3d90bd0f244fd062708
+ # uses: sarisia/actions-status-discord@eb045afee445dc055c18d3d90bd0f244fd062708
   uses: sarisia/actions-status-discord@v1.16.0
   with:
     # Discord webhook endpoint. If not set, env.DISCORD_WEBHOOK will be used.
     webhook: https://discord.com/api/webhooks/1470154721628127454/dKf9GI2DrCZbzK_MpUSMFFhkhhgiUp3M3ZCM7xxQOc-ixvx92fZystKWhbRh9oyh-iXT
-    # Job status. Should be bound to job.status. Default to success.
-    status: # optional, default is ${{ job.status }}
-    # Deprecated. Job name included in message title. Same as title input.
-    job: # optional
-    # Content. Shown as an message outside of the embed. See [Mention to user/role](#mention-to-user-role)
-    content: # optional
-    # String included in embed title. Overrides job input.
-    title: # optional, default is ${{ github.workflow }}
-    # Description included in message
-    description: # optional
-    # Image attached to the message
-    image: # optional
-    # Overrides Discord embed color
-    color: # optional
-    # URL to jump when the title is clicked
-    url: # optional
-    # Overrides Discord webhook username
-    username: # optional
-    # Overrides Discord webhook avatar url
-    avatar_url: # optional
-    # This action won't make workflow failed by default.
-    nofail: # optional, default is true
-    # Suppress GitHub context fields
-    nocontext: # optional, default is false
-    # Avoid appending job status to title
-    noprefix: # optional, default is false
-    # Suppress detailed embed fields
-    nodetail: # optional, default is false
-    # Avoid appending timestamp
-    notimestamp: # optional, default is false
-    # Suppress error which raised when webhook is not set
-    ack_no_webhook: # optional, default is false
-          
