@@ -1,0 +1,21 @@
+#!/bin/busybox sh
+
+# cd initramfs
+# find . -print0 | cpio --null -ov --format=newc | gzip > initramfs.cpio.gz
+
+
+echo "Welcome to PocketDarwin."
+
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t devtmpfs none /dev
+
+mkdir -p /tmp
+mount -t tmpfs tmpfs /tmp
+
+setfont /usr/share/TER16x32.psfy.gz
+
+echo "[i] Now starting vmapple"
+
+exec /bin/vmapple-select
+

@@ -1,3 +1,5 @@
+# include vmapple/vmapple.make
+
 CC ?= cc
 CXX ?= c++
 CFLAGS ?= -O2 -Wall -Wextra -std=c11
@@ -30,8 +32,11 @@ else
 	$(CXX) $(CXXFLAGS) -o $@ $(INTERLUDE_SOURCES) $(INTERLUDE_CXX_SOURCES) $(LDFLAGS)
 endif
 
+vmapple:
+	$(CXX) $(CFLAGS) vmapple/vmapple.c -o darwin_vmapple
+
 l2d_dump: l2d_dump.cpp Linux2DarwinBridge.cxx
 	$(CXX) $(CXXFLAGS) -o $@ l2d_dump.cpp Linux2DarwinBridge.cxx $(LDFLAGS)
 
 clean:
-	rm -f darwin_interlude l2d_dump
+	rm -f darwin_interlude l2d_dump darwin_vmapple

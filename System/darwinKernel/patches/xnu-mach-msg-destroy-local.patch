@@ -1,0 +1,17 @@
+diff --git a/bsd/gssd/gssd_mach.c b/bsd/gssd/gssd_mach.c
+index 0000000..1111111 100644
+--- a/bsd/gssd/gssd_mach.c
++++ b/bsd/gssd/gssd_mach.c
+@@ -60,6 +60,12 @@
+ #include <mach/mach.h>
+ #include <mach/mach_error.h>
+
++#ifndef MACH_MSG_DESTROY_FROM_KERNEL_DECLARED
++#define MACH_MSG_DESTROY_FROM_KERNEL_DECLARED 1
++extern void mach_msg_destroy_from_kernel(mach_msg_header_t *msg);
++#endif
++
+ /*
+  * MIG server routines
+  */
+

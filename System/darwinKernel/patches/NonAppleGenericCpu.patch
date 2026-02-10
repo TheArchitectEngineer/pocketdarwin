@@ -1,0 +1,9 @@
+diff --git a/makedefs/MakeInc.def b/makedefs/MakeInc.def
+index xxxx..yyyy 10064
+--- a/makedefs/MakeInc.def
++++ b/makedefs/MakeInc.def
+@@@ -123,8 +123,8 @@
+-MACHINE_FLAGS_ARM64_T7000 = -DARM64_BOARD_CONFIG_T7000 -mcpu=apple-h7
+-MACHINE_FLAGS_ARM64_T7001 = -DARM64_BOARD_CONFIG_T7001 -mcpu=apple-h7
++MACHINE_FLAGS_ARM64_T7000 = -DARM64_BOARD_CONFIG_T7000 -march=armv8-a
++MACHINE_FLAGS_ARM64_T7001 = -DARM64_BOARD_CONFIG_T7001 -march=armv8-a

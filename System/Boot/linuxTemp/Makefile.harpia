@@ -35,19 +35,51 @@ export HOSTLDFLAGS
 
 all: kernel
 
-defconfig:
+defconfig: clobber-config
 	$(MAKE) -C $(KERNEL_SRC) \
 		O=$(OUT) \
 		ARCH=$(ARCH) \
 		CROSS_COMPILE=$(CROSS_COMPILE) \
-		$(DEFCONFIG_TARGET)
+		$(DEFCONFIG_TARGET) \
+		LLVM=1
 
-kernel: defconfig
+kernel: defconfig prepare
 	$(MAKE) -C $(KERNEL_SRC) \
 		O=$(OUT) \
 		ARCH=$(ARCH) \
 		CROSS_COMPILE=$(CROSS_COMPILE) \
-		-j$$(nproc)
+		-j$$(nproc) \
+		LLVM=1
+
+config: defconfig fixup-config
+	$(MAKE) -C $(KERNEL_SRC) \
+		O=$(OUT) \
+		ARCH=arm64 \
+		CROSS_COMPILE=aarch64-linux-gnu- \
+		CC=clang \
+		LLVM=1 \
+		LLVM_IAS=1 \
+		LOCALVERSION=-pdarwin-vmapple \
+		olddefconfig
+
+fixup-config:
+	@echo '# CONFIG_DEBUG_FS is not set' >> $(OUT)/.config
+	@echo '# CONFIG_DEBUG_KERNEL is not set' >> $(OUT)/.config
+	@echo '# CONFIG_FTRACE is not set' >> $(OUT)/.config
+	@echo '# CONFIG_TRACING is not set' >> $(OUT)/.config
+	@echo '# CONFIG_TRACEPOINTS is not set' >> $(OUT)/.config
+	@echo '# CONFIG_MODULES is not set' >> $(OUT)/.config
+	@echo 'CONFIG_HFS_FS=y' >> $(OUT)/.config
+	@echo 'CONFIG_HFSPLUS_FS=y' >> $(OUT)/.config
+
+
+clobber-config:
+	rm -f $(OUT)/.config
+
+prepare:
+	mkdir -p $(OUT)/arch/arm64/include/generated/asm
+	mkdir -p $(OUT)/arch/arm64/include/generated/uapi/asm
+
 
 clean:
 	rm -rf $(OUT)

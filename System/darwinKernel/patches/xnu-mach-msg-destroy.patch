@@ -1,0 +1,23 @@
+diff --git a/osfmk/mach/mach_msg.h b/osfmk/mach/mach_msg.h
+index 6d4f9a2..f3b7a10 100644
+--- a/osfmk/mach/mach_msg.h
++++ b/osfmk/mach/mach_msg.h
+@@ -312,6 +312,18 @@ typedef struct {
+ } mach_msg_trailer_t;
+
+ /*
++ * Some userland-generated MIG code (gssd, lockd, UserNotification, etc.)
++ * expects this kernel helper to be available. On non-Apple build
++ * environments the prototype is missing, causing C99 implicit-declaration
++ * failures.
++ */
++#ifndef MACH_MSG_DESTROY_FROM_KERNEL_DECLARED
++#define MACH_MSG_DESTROY_FROM_KERNEL_DECLARED 1
++
++extern void mach_msg_destroy_from_kernel(mach_msg_header_t *msg);
++#endif
++
++/*
+  *  User-visible message types.
+  */
+
