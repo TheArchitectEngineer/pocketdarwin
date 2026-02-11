@@ -7,3 +7,12 @@
 [submodule "System/darwinKernel/xnu-arm"]
 	path = System/darwinKernel/xnu-arm
 	url = https://github.com/darwin-on-arm/xnu.git
+[submodule "System/Frameworks/L2DIOBridgeKit/Libraries/json"]
+	path = System/Frameworks/L2DIOBridgeKit/Libraries/json
+	url = https://github.com/nlohmann/json
+[submodule "System/Frameworks/GnuCoreFoundation"]
+	path = System/Frameworks/GnuCoreFoundation
+	url = https://github.com/gnustep/libs-corebase
+[submodule "System/darwinKernel/kext_tools"]
+	path = System/darwinKernel/kext_tools
+	url = https://github.com/apple-oss-distributions/kext_tools
