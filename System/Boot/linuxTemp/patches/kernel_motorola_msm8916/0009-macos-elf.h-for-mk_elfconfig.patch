@@ -1,0 +1,71 @@
+From: PocketDarwin build <noreply@localhost>
+Subject: [PATCH] scripts: add minimal elf.h for macOS host build (mk_elfconfig)
+
+macOS does not provide /usr/include/elf.h. Provide a minimal elf.h
+in scripts/include with only the constants needed by mk_elfconfig.c
+so the kernel can be built on macOS without requiring Homebrew libelf.
+
+ scripts/include/elf.h       | 28 ++++++++++++++++++++++++++++
+ scripts/mod/Makefile        |  4 ++++
+ scripts/mod/mk_elfconfig.c  |  2 +-
+ 3 files changed, 33 insertions(+), 1 deletion(-)
+ create mode 100644 scripts/include/elf.h
+
+diff --git a/scripts/include/elf.h b/scripts/include/elf.h
+new file mode 100644
+index 0000000..b2bf86e
+--- /dev/null
++++ b/scripts/include/elf.h
+@@ -0,0 +1,28 @@
++/*
++ * Minimal ELF definitions for host mk_elfconfig (macOS has no /usr/include/elf.h).
++ * Only the constants used by scripts/mod/mk_elfconfig.c are defined.
++ */
++#ifndef _SCRIPTS_ELF_H
++#define _SCRIPTS_ELF_H
++
++#define EI_MAG0		0
++#define EI_MAG1		1
++#define EI_MAG2		2
++#define EI_MAG3		3
++#define EI_CLASS	4
++#define EI_DATA		5
++
++#define ELFMAG		"\177ELF"
++#define SELFMAG		4
++
++#define ELFCLASSNONE	0
++#define ELFCLASS32	1
++#define ELFCLASS64	2
++
++#define ELFDATANONE	0
++#define ELFDATA2LSB	1
++#define ELFDATA2MSB	2
++
++#define EI_NIDENT	16
++
++#endif /* _SCRIPTS_ELF_H */
+diff --git a/scripts/mod/Makefile b/scripts/mod/Makefile
+--- a/scripts/mod/Makefile
++++ b/scripts/mod/Makefile
+@@ -1,5 +1,9 @@
+ hostprogs-y	:= modpost mk_elfconfig
+ always		:= $(hostprogs-y) empty.o
++
++# macOS has no system elf.h; use minimal scripts/include/elf.h
++HOSTCFLAGS_mk_elfconfig.o := -I$(srctree)/scripts/include
+ 
+ modpost-objs	:= modpost.o file2alias.o sumversion.o
+ 
+ diff --git a/scripts/mod/mk_elfconfig.c b/scripts/mod/mk_elfconfig.c
+--- a/scripts/mod/mk_elfconfig.c
++++ b/scripts/mod/mk_elfconfig.c
+@@ -1,7 +1,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <elf.h>
++#include "elf.h"
+ 
+ int
+ main(int argc, char **argv)

@@ -25,7 +25,7 @@ endif
 DEFCONFIG_TARGET := $(notdir $(DEFCONFIG))
 
 HOSTCFLAGS := -I$(brew --prefix libelf)/include
-HOSTLDFLAGS := -L$(brew --prefix libelf)/lib
+HOSTLDFLAGS := -L$(brew --prefix libelf)/lib -Wl,-no_pie
 
 export HOSTCFLAGS
 export HOSTLDFLAGS
@@ -35,7 +35,10 @@ export HOSTLDFLAGS
 
 all: kernel
 
-defconfig: clobber-config
+$(OUT):
+	mkdir -p $(OUT)
+
+defconfig: $(OUT) clobber-config
 	$(MAKE) -C $(KERNEL_SRC) \
 		O=$(OUT) \
 		ARCH=$(ARCH) \
@@ -48,7 +51,7 @@ kernel: defconfig prepare
 		O=$(OUT) \
 		ARCH=$(ARCH) \
 		CROSS_COMPILE=$(CROSS_COMPILE) \
-		-j$$(nproc) \
+		-j$$(sysctl -n hw.ncpu 2>/dev/null || echo 1) \
 		LLVM=1
 
 config: defconfig fixup-config
