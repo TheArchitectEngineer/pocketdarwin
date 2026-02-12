@@ -15,6 +15,7 @@ BUILDTYPE      ?= DEVELOPMENT
 ARCH           ?= ARM64
 SDKROOT        ?= $(shell xcrun --show-sdk-path)
 KERNELVERSION  ?= 0.0.0
+MACHINE_CONFIG ?= VMAPPLE
 
 # ARM_CPU	       := generic
 # PLATFORM       := ARM64
@@ -40,12 +41,24 @@ export ARCH_CONFIGS
 #export SHELL
 #export CONFIG_SHELL
 
-.PHONY: all xnu dirs clean
+.PHONY: all xnu dirs clean genericarm64 genericarm vmapple
 
 all: dirs xnu
 
 dirs:
 	mkdir -p $(OBJROOT) $(SYMROOT) $(DSTROOT)
+
+# Generic ARM64 configuration target
+genericarm64:
+	$(MAKE) xnu MACHINE_CONFIG=GENERICARM64
+
+# Generic ARM configuration target  
+genericarm:
+	$(MAKE) xnu ARCH=ARM MACHINE_CONFIG=GENERICARM
+
+# VMAPPLE configuration target
+vmapple:
+	$(MAKE) xnu MACHINE_CONFIG=VMAPPLE
 
 xnu:
 	cd $(XNU_SRC) && \
@@ -53,16 +66,17 @@ xnu:
 	  LOGCOLORS=n \
 	  PLATFORM=MacOSX \
 	  BUILD_LTO=0 \
-	  SUPPORTED_ARM64_MACHINE_CONFIGS=VMAPPLE \
+	  SUPPORTED_ARM64_MACHINE_CONFIGS=VMAPPLE GENERICARM64 \
 	  BUILD_WERROR=0 \
-          CURRENT_MACHINE_CONFIG=VMAPPLE \
+          CURRENT_MACHINE_CONFIG=$(MACHINE_CONFIG) \
 	  DO_CTFMERGE=0 \
 	  BUILD_STATIC_LINK=1 \
 	  KERNEL_CONFIGS=$(BUILDTYPE) \
 	  ARCH_CONFIGS=$(ARCH) \
 	  VERBOSE=YES \
 	  RC_DARWIN_KERNEL_VERSION=$(KERNELVERSION) \
-	  USE_WERROR=0
+	  USE_WERROR=0 \
+	  all
 clean:
 	rm -rf $(BUILD)
 

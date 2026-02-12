@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A1CC6C02F3E7B250091FA4D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1CC6BF2F3E7B250091FA4D /* AppKit.framework */; };
+		2A1CC6C32F3E7B5A0091FA4D /* Ruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1CC6C12F3E7B520091FA4D /* Ruby.framework */; };
+		2A1CC6C42F3E7B5A0091FA4D /* Ruby.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1CC6C12F3E7B520091FA4D /* Ruby.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2A1CC6C62F3E7B5D0091FA4D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1CC6BF2F3E7B250091FA4D /* AppKit.framework */; };
+		2A1CC6C72F3E7B5D0091FA4D /* AppKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1CC6BF2F3E7B250091FA4D /* AppKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,11 +30,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2A1CC6C52F3E7B5A0091FA4D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2A1CC6C42F3E7B5A0091FA4D /* Ruby.framework in Embed Frameworks */,
+				2A1CC6C72F3E7B5D0091FA4D /* AppKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2A1CC68F2F3E7AE30091FA4D /* LLVM Bundle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LLVM Bundle.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1CC6A12F3E7AEC0091FA4D /* LLVM BundleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LLVM BundleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1CC6AB2F3E7AEC0091FA4D /* LLVM BundleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LLVM BundleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1CC6BF2F3E7B250091FA4D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		2A1CC6C12F3E7B520091FA4D /* Ruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ruby.framework; path = System/Library/Frameworks/Ruby.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -57,7 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A1CC6C02F3E7B250091FA4D /* AppKit.framework in Frameworks */,
+				2A1CC6C32F3E7B5A0091FA4D /* Ruby.framework in Frameworks */,
+				2A1CC6C62F3E7B5D0091FA4D /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +122,7 @@
 		2A1CC6BE2F3E7B200091FA4D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2A1CC6C12F3E7B520091FA4D /* Ruby.framework */,
 				2A1CC6BF2F3E7B250091FA4D /* AppKit.framework */,
 			);
 			name = Frameworks;
@@ -117,6 +138,7 @@
 				2A1CC68B2F3E7AE30091FA4D /* Sources */,
 				2A1CC68C2F3E7AE30091FA4D /* Frameworks */,
 				2A1CC68D2F3E7AE30091FA4D /* Resources */,
+				2A1CC6C52F3E7B5A0091FA4D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
