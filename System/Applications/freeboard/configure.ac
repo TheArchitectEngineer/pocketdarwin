@@ -1,5 +1,6 @@
 AC_INIT([freeboard], [0.1.0a])
 AM_INIT_AUTOMAKE([foreign])
+LT_INIT
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_OBJCXX

@@ -36,6 +36,11 @@ SUPPORTED_ARM64_MACHINE_CONFIGS = BCM2837 T6000 T8101 VMAPPLE
 
 endif
 
+# Ensure VMAPPLE is always available for PocketDarwin builds
+ifeq ($(findstring VMAPPLE,$(CURRENT_MACHINE_CONFIG)),VMAPPLE)
+SUPPORTED_ARM64_MACHINE_CONFIGS += VMAPPLE
+endif
+
 #
 # Setup up *_LC variables during recursive invocations
 #

@@ -167,17 +167,22 @@ mac_vnop_setxattr(struct vnode *vp, const char *name, char *buf, size_t len)
 {
 	vfs_context_t ctx;
 	int options = XATTR_NOSECURITY;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(1)];
+	uio_stackbuf_t *uio_buf = malloc(UIO_SIZEOF(1));
 	uio_t auio;
 	int error;
 
+	if (!uio_buf) {
+		return ENOMEM;
+	}
+
 	if (vfs_isrdonly(vp->v_mount)) {
+		free(uio_buf);
 		return EROFS;
 	}
 
 	ctx = vfs_context_current();
 	auio = uio_createwithbuffer(1, 0, UIO_SYSSPACE, UIO_WRITE,
-	    &uio_buf[0], sizeof(uio_buf));
+	    uio_buf, UIO_SIZEOF(1));
 	uio_addiov(auio, CAST_USER_ADDR_T(buf), len);
 
 	error = vn_setxattr(vp, name, auio, options, ctx);
@@ -188,7 +193,7 @@ mac_vnop_setxattr(struct vnode *vp, const char *name, char *buf, size_t len)
 		    FSE_ARG_DONE);
 	}
 #endif
-
+	free(uio_buf);
 	return error;
 }
 
@@ -198,17 +203,22 @@ mac_vnop_getxattr(struct vnode *vp, const char *name, char *buf, size_t len,
 {
 	vfs_context_t ctx = vfs_context_current();
 	int options = XATTR_NOSECURITY;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(1)];
+	uio_stackbuf_t *uio_buf = malloc(UIO_SIZEOF(1));
 	uio_t auio;
 	int error;
 
+	if (!uio_buf) {
+		return ENOMEM;
+	}
+
 	auio = uio_createwithbuffer(1, 0, UIO_SYSSPACE, UIO_READ,
-	    &uio_buf[0], sizeof(uio_buf));
+	    uio_buf, UIO_SIZEOF(1));
 	uio_addiov(auio, CAST_USER_ADDR_T(buf), len);
 
 	error = vn_getxattr(vp, name, auio, attrlen, options, ctx);
 	*attrlen = len - uio_resid(auio);
 
+	free(uio_buf);
 	return error;
 }
 

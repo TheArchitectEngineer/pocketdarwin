@@ -13,3 +13,9 @@
 [submodule "System/darwinKernel/kext_tools"]
 	path = System/darwinKernel/kext_tools
 	url = https://github.com/apple-oss-distributions/kext_tools
+[submodule "System/darwinKernel/dtb2dtc"]
+	path = System/darwinKernel/dtb2dtc
+	url = https://github.com/darwin-on-arm/dtc-AppleDeviceTree
+[submodule "System/darwinKernel/launchd"]
+	path = System/darwinKernel/launchd
+	url = https://github.com/apple-opensource/launchd

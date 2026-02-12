@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-ROOT_DIR="$(cd "$(dirname "$0")/../../../.." && pwd)"
-SDK_ROOT="$ROOT_DIR/Developer/SDKs/PocketDarwin.sdk"
-TARGET_TRIPLE="${PD_TARGET_TRIPLE:-arm64-apple-darwin}"
-
-exec ld.lld --sysroot="$SDK_ROOT" -flavor darwin -arch arm64 "$@"

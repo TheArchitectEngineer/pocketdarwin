@@ -1,0 +1,47 @@
+# Simple Makefile for system info example
+CC = gcc
+CXX = g++
+CFLAGS = -Wall -g -O2
+CXXFLAGS = -Wall -g -O2 -std=gnu++11
+LDFLAGS = -framework Foundation
+
+# Include paths
+INCLUDES = -I.
+
+# Source files
+FREEBOARD_SOURCES = FreeboardAPI.cpp AppScanner.mm
+EXAMPLE_SOURCES = system_info_example.c
+
+# Object files
+FREEBOARD_OBJECTS = $(FREEBOARD_SOURCES:.cpp=.o)
+FREEBOARD_OBJECTS := $(FREEBOARD_OBJECTS:.mm=.o)
+EXAMPLE_OBJECTS = $(EXAMPLE_SOURCES:.c=.o)
+
+# Targets
+all: system_info_example
+
+# Build the example program
+system_info_example: $(FREEBOARD_OBJECTS) $(EXAMPLE_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+
+# Compile C++ source files
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+# Compile Objective-C++ source files
+%.o: %.mm
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+# Compile C source files
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Clean build artifacts
+clean:
+	rm -f *.o system_info_example
+
+# Install (placeholder)
+install: system_info_example
+	echo "Installation not implemented"
+
+.PHONY: all clean install

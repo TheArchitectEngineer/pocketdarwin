@@ -33,6 +33,7 @@ std::vector<AppInfo> scanApplications(const std::string& applicationsPath) {
             NSString* contentsPath = [bundlePath stringByAppendingPathComponent: @"Contents"];
             NSString* plistPath = [contentsPath stringByAppendingPathComponent: @"Info.plist"];
             NSString* macOSPath = [contentsPath stringByAppendingPathComponent: @"MacOS"];
+            NSString* resourcesPath = [contentsPath stringByAppendingPathComponent: @"Resources"];
 
             NSString* displayName = [name stringByDeletingPathExtension];
             NSString* execName = nil;
@@ -58,10 +59,45 @@ std::vector<AppInfo> scanApplications(const std::string& applicationsPath) {
                     continue;
             }
 
+            // Look for PNG icons in Resources directory
+            NSString* iconPath = nil;
+            BOOL hasCustomIcon = NO;
+            
+            if ([fm fileExistsAtPath: resourcesPath isDirectory: &isDir] && isDir) {
+                NSArray* resources = [fm contentsOfDirectoryAtPath: resourcesPath error: &err];
+                if (resources) {
+                    // Look for icon files with common naming patterns
+                    NSArray* iconNames = @[@"icon.png", @"Icon.png", @"AppIcon.png", @"app-icon.png", 
+                                         [NSString stringWithFormat: @"%@.png", [name stringByDeletingPathExtension]]];
+                    
+                    for (NSString* iconName in iconNames) {
+                        NSString* possibleIcon = [resourcesPath stringByAppendingPathComponent: iconName];
+                        if ([fm fileExistsAtPath: possibleIcon]) {
+                            iconPath = possibleIcon;
+                            hasCustomIcon = YES;
+                            break;
+                        }
+                    }
+                    
+                    // If no standard icon found, look for any PNG file
+                    if (!iconPath) {
+                        for (NSString* resource in resources) {
+                            if ([resource hasSuffix: @".png"]) {
+                                iconPath = [resourcesPath stringByAppendingPathComponent: resource];
+                                hasCustomIcon = YES;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
             AppInfo info;
             info.displayName = nsstringToStdString(displayName);
             info.bundlePath = nsstringToStdString(bundlePath);
             info.executablePath = nsstringToStdString(executablePath);
+            info.iconPath = iconPath ? nsstringToStdString(iconPath) : "";
+            info.hasCustomIcon = hasCustomIcon;
             result.push_back(info);
         }
     }

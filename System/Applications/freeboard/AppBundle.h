@@ -15,6 +15,8 @@ struct AppInfo {
     std::string displayName;
     std::string bundlePath;
     std::string executablePath;
+    std::string iconPath;  // Path to .png icon file
+    bool hasCustomIcon;
 };
 
 /** Scan /Applications for .app bundles; return list of AppInfo. */
