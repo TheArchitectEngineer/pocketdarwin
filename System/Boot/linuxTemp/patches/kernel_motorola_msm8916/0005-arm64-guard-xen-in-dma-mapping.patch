@@ -1,0 +1,27 @@
+diff --git a/arch/arm64/include/asm/dma-mapping.h b/arch/arm64/include/asm/dma-mapping.h
+--- a/arch/arm64/include/asm/dma-mapping.h
++++ b/arch/arm64/include/asm/dma-mapping.h
+@@ -23,8 +23,10 @@
+ 
+ #include <asm-generic/dma-coherent.h>
+ 
++#ifdef CONFIG_XEN
+ #include <xen/xen.h>
+ #include <asm/xen/hypervisor.h>
++#endif
+ 
+ #define DMA_ERROR_CODE	(~(dma_addr_t)0)
+ extern const struct dma_map_ops *dma_ops;
+@@ -46,9 +48,11 @@ static inline void set_dma_ops(struct device *dev, struct dma_map_ops *ops)
+ 
+ static inline const struct dma_map_ops *get_dma_ops(struct device *dev)
+ {
++
++#ifdef CONFIG_XEN
+ 	if (xen_initial_domain())
+ 		return xen_dma_ops;
+-	else
++#endif
+ 		return __generic_dma_ops(dev);
+ }
+ 

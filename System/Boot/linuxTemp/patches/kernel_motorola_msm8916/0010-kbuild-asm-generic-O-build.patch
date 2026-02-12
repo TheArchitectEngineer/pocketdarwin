@@ -1,0 +1,50 @@
+From: PocketDarwin build <noreply@localhost>
+Subject: [PATCH] kbuild: fix asm-generic and prepare for O= build on macOS
+
+- Use $(srctree)/scripts/Kbuild.include in Makefile.asm-generic so it
+  works when building with O= (out-of-tree) where scripts/ is not in cwd.
+- Pass srctree and SRCARCH explicitly to asm-generic sub-make.
+- Make prepare0 depend on generated asm/swab.h so headers exist before
+  compiling kernel/bounds.c (fixes parallel build order with O=).
+
+ Makefile                    | 14 +++++++++++++-
+ scripts/Makefile.asm-generic |  3 ++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -442,9 +442,12 @@ endif
+ # Support for using generic headers in asm-generic
+ PHONY += asm-generic
+ asm-generic:
+ 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.asm-generic \
++	            srctree=$(srctree) SRCARCH=$(SRCARCH) \
+ 	            src=asm obj=arch/$(SRCARCH)/include/generated/asm
+ 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.asm-generic \
++	            srctree=$(srctree) SRCARCH=$(SRCARCH) \
+ 	            src=uapi/asm obj=arch/$(SRCARCH)/include/generated/uapi/asm
+ 
+ # To make sure we do not include .config for any of the *config targets
+@@ -858,8 +864,14 @@ archprepare: archheaders archscripts prepare1 scripts_basic
+ 
+ -prepare0: archprepare FORCE
++arch/$(SRCARCH)/include/generated/asm/swab.h: asm-generic
++	@:
++prepare0: archprepare arch/$(SRCARCH)/include/generated/asm/swab.h FORCE
+ 	$(Q)$(MAKE) $(build)=.
+ 
+ # All the preparing..
+ prepare: prepare0
+diff --git a/scripts/Makefile.asm-generic b/scripts/Makefile.asm-generic
+--- a/scripts/Makefile.asm-generic
++++ b/scripts/Makefile.asm-generic
+@@ -8,7 +8,8 @@ kbuild-file := $(srctree)/arch/$(SRCARCH)/include/$(src)/Kbuild
+ -include $(kbuild-file)
+ 
+-include scripts/Kbuild.include
++# Use srctree so this works when building with O= (out-of-tree)
++include $(srctree)/scripts/Kbuild.include
+ 
+ # Create output directory if not already present
+ _dummy := $(shell [ -d $(obj) ] || mkdir -p $(obj))

@@ -1,0 +1,16 @@
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -843,9 +843,13 @@ prepare3: include/config/kernel.release
+ 	$(Q)if [ -f $(srctree)/.config -o -d $(srctree)/include/config ]; then \
+ 		echo >&2 "  $(srctree) is not clean, please run 'make mrproper'"; \
+ 		echo >&2 "  in the '$(srctree)' directory.";\
+-		/bin/false; \
++		if [ "$${ALLOW_DIRTY_SRCTREE}" != "1" ]; then \
++			false; \
++		else \
++			echo >&2 "  continuing due to ALLOW_DIRTY_SRCTREE=1"; \
++		fi; \
+ 	fi;
+ endif
+ 

@@ -1,0 +1,76 @@
+diff -uNr a/fs/sdcardfs/dentry.c b/fs/sdcardfs/dentry.c
+--- a/fs/sdcardfs/dentry.c	2026-02-11 20:58:48
++++ b/fs/sdcardfs/dentry.c	2026-02-11 20:58:48
+@@ -131,7 +131,7 @@
+ 	if (has_graft_path(dentry))
+ 		sdcardfs_put_reset_orig_path(dentry);
+ 	sdcardfs_put_reset_lower_path(dentry);
+-	free_dentry_private_data(dentry);
++	sdcardfs_free_dentry_private_data(dentry);
+ }
+ 
+ static int sdcardfs_hash_ci(const struct dentry *dentry,
+diff -uNr a/fs/sdcardfs/lookup.c b/fs/sdcardfs/lookup.c
+--- a/fs/sdcardfs/lookup.c	2026-02-11 20:58:48
++++ b/fs/sdcardfs/lookup.c	2026-02-11 20:58:48
+@@ -39,14 +39,14 @@
+ 	kmem_cache_destroy(sdcardfs_dentry_cachep);
+ }
+ 
+-void free_dentry_private_data(struct dentry *dentry)
++void sdcardfs_free_dentry_private_data(struct dentry *dentry)
+ {
+ 	kmem_cache_free(sdcardfs_dentry_cachep, dentry->d_fsdata);
+ 	dentry->d_fsdata = NULL;
+ }
+ 
+ /* allocate new dentry private data */
+-int new_dentry_private_data(struct dentry *dentry)
++int sdcardfs_new_dentry_private_data(struct dentry *dentry)
+ {
+ 	struct sdcardfs_dentry_info *info = SDCARDFS_D(dentry);
+ 
+@@ -436,7 +436,7 @@
+ 	sdcardfs_get_lower_path(parent, &lower_parent_path);
+ 
+ 	/* allocate dentry private data.  We free it in ->d_release */
+-	err = new_dentry_private_data(dentry);
++	err = sdcardfs_new_dentry_private_data(dentry);
+ 	if (err) {
+ 		ret = ERR_PTR(err);
+ 		goto out;
+diff -uNr a/fs/sdcardfs/main.c b/fs/sdcardfs/main.c
+--- a/fs/sdcardfs/main.c	2026-02-11 20:58:48
++++ b/fs/sdcardfs/main.c	2026-02-11 20:58:48
+@@ -329,7 +329,7 @@
+ 
+ 	/* link the upper and lower dentries */
+ 	sb->s_root->d_fsdata = NULL;
+-	err = new_dentry_private_data(sb->s_root);
++	err = sdcardfs_new_dentry_private_data(sb->s_root);
+ 	if (err)
+ 		goto out_freeroot;
+ 
+@@ -365,7 +365,7 @@
+ 				dev_name, lower_sb->s_type->name);
+ 	goto out; /* all is well */
+ 
+-	/* no longer needed: free_dentry_private_data(sb->s_root); */
++	/* no longer needed: sdcardfs_free_dentry_private_data(sb->s_root); */
+ out_freeroot:
+ 	dput(sb->s_root);
+ 	sb->s_root = NULL;
+diff -uNr a/fs/sdcardfs/sdcardfs.h b/fs/sdcardfs/sdcardfs.h
+--- a/fs/sdcardfs/sdcardfs.h	2026-02-11 20:58:48
++++ b/fs/sdcardfs/sdcardfs.h	2026-02-11 20:58:48
+@@ -141,8 +141,8 @@
+ extern void sdcardfs_destroy_inode_cache(void);
+ extern int sdcardfs_init_dentry_cache(void);
+ extern void sdcardfs_destroy_dentry_cache(void);
+-extern int new_dentry_private_data(struct dentry *dentry);
+-extern void free_dentry_private_data(struct dentry *dentry);
++extern int sdcardfs_new_dentry_private_data(struct dentry *dentry);
++extern void sdcardfs_free_dentry_private_data(struct dentry *dentry);
+ extern struct dentry *sdcardfs_lookup(struct inode *dir, struct dentry *dentry,
+ 				unsigned int flags);
+ extern struct inode *sdcardfs_iget(struct super_block *sb,

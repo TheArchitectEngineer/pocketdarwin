@@ -1,0 +1,26 @@
+# Autotools
+/autom4te.cache
+/config.h
+/config.h.in
+/config.log
+/config.status
+/configure
+/Makefile
+/Makefile.in
+/aclocal.m4
+/compile
+/depcomp
+/install-sh
+/missing
+/stamp-h1
+
+# Build
+*.o
+*.lo
+*.la
+*.a
+.libs/
+freeboard
+
+# macOS
+.DS_Store

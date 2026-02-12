@@ -1,0 +1,12 @@
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -561,7 +561,7 @@ include/config/auto.conf:
+ 		echo >&2 "         include/generated/autoconf.h or $@ are missing.";\
+ 		echo >&2 "         Run 'make oldconfig && make prepare' on kernel src to fix it.";	\
+ 		echo >&2 ;							\
+-		/bin/false)
++		false)
+ 
+ endif # KBUILD_EXTMOD
+ 

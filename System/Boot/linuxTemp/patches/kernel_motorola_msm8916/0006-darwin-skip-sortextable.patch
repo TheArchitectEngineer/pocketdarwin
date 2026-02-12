@@ -1,0 +1,26 @@
+diff --git a/scripts/Makefile b/scripts/Makefile
+--- a/scripts/Makefile
++++ b/scripts/Makefile
+@@ -15,7 +15,9 @@ hostprogs-$(CONFIG_LOGO)         += pnmtologo
+ hostprogs-$(CONFIG_VT)           += conmakehash
+ hostprogs-$(CONFIG_IKCONFIG)     += bin2c
+ hostprogs-$(BUILD_C_RECORDMCOUNT) += recordmcount
++ifneq ($(shell uname -s),Darwin)
+ hostprogs-$(CONFIG_BUILDTIME_EXTABLE_SORT) += sortextable
++endif
+ hostprogs-$(CONFIG_ASN1)	 += asn1_compiler
+ 
+ HOSTCFLAGS_sortextable.o = -I$(srctree)/tools/include
+diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+--- a/scripts/link-vmlinux.sh
++++ b/scripts/link-vmlinux.sh
+@@ -210,7 +210,9 @@ info LD vmlinux
+ vmlinux_link "${kallsymso}" vmlinux
+ 
+-if [ -n "${CONFIG_BUILDTIME_EXTABLE_SORT}" ]; then
++if [ -n "${CONFIG_BUILDTIME_EXTABLE_SORT}" ] \
++	&& [ -x "${objtree}/scripts/sortextable" ]; then
++
+ 	info SORTEX vmlinux
+ 	sortextable vmlinux
+ fi
