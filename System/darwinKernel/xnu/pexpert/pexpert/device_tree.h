@@ -97,6 +97,8 @@ typedef struct DTSavedScope {
 } *DTSavedScopePtr;
 
 /* Entry Iterator*/
+#ifndef _DTENTRY_ITERATOR_T_DEFINED
+#define _DTENTRY_ITERATOR_T_DEFINED
 typedef struct OpaqueDTEntryIterator {
 	RealDTEntry outerScope;
 	RealDTEntry currentScope;
@@ -104,22 +106,32 @@ typedef struct OpaqueDTEntryIterator {
 	DTSavedScopePtr savedScope;
 	unsigned long currentIndex;
 } OpaqueDTEntryIterator, *DTEntryIterator;
+#endif
 
 /* Property Iterator*/
+#ifndef _DTPROPERTY_ITERATOR_T_DEFINED
+#define _DTPROPERTY_ITERATOR_T_DEFINED
 typedef struct OpaqueDTPropertyIterator {
 	RealDTEntry entry;
 	DeviceTreeNodeProperty const *currentProperty;
 	unsigned long currentIndex;
 } OpaqueDTPropertyIterator, *DTPropertyIterator;
+#endif
 
 /* Entry*/
 typedef const struct OpaqueDTEntry* DTEntry;
 
 /* Entry Iterator*/
+#ifndef _DTENTRY_ITERATOR_T_DEFINED
+#define _DTENTRY_ITERATOR_T_DEFINED
 typedef struct OpaqueDTEntryIterator* DTEntryIterator;
+#endif
 
 /* Property Iterator*/
+#ifndef _DTPROPERTY_ITERATOR_T_DEFINED
+#define _DTPROPERTY_ITERATOR_T_DEFINED
 typedef struct OpaqueDTPropertyIterator* DTPropertyIterator;
+#endif
 
 
 /* status values*/

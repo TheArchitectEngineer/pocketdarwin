@@ -406,7 +406,7 @@ C_RULE_4B_D=${C_RULE_4B}
 #   The config tool slickly changes the last source filename char to 'o'
 #   for the object filename.
 P_RULE_0=@$(LOG_CXX) "$@"
-P_RULE_1A=$(_v)${KC++} -o $@ -c ${CXXFLAGS} ${filter-out ${$@_CFLAGS_RM}, ${CFLAGS} ${CXXWARNFLAGS}} -MD -MF $(@:o=d) -MP ${$@_CFLAGS_ADD} ${$@_CXXWARNFLAGS_ADD} ${INCFLAGS} ${$@_INCFLAGS}
+P_RULE_1A=$(_v)${KC++} -o $@ -c ${CXXFLAGS} ${filter-out -std=gnu99, ${filter-out ${$@_CFLAGS_RM}, ${CFLAGS} ${CXXWARNFLAGS}}} -MD -MF $(@:o=d) -MP ${$@_CFLAGS_ADD} ${$@_CXXWARNFLAGS_ADD} ${INCFLAGS} ${$@_INCFLAGS}
 P_RULE_1B=$(<F)
 P_RULE_2=
 

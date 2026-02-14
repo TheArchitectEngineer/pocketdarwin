@@ -1,0 +1,35 @@
+KERNELSRC := Kernel
+FRAMEWORKS := Frameworks
+
+BUILD_ARCH ?= x86_64
+SDKROOT ?= macosx.internal
+KERNELVERSION ?= 23.0.0
+
+SYMROOT ?= $(pwd)/build/sym
+OBJROOT ?= $(pwd)/build/obj
+DSTROOT ?= $(pwd)/build/dst
+
+ARCH_CONFIGS := x86_64
+KERNEL_CONFIGS ?= DEVELOPMENT # DEVELOPMENT for dev builds, and RELEASE for final builds
+
+export ARCH_CONFIGS
+export KERNEL_CONFIGS
+export SYMROOT
+export OBJROOT
+export DSTROOT
+
+.PHONY xnu loader frameworks userland
+
+all: xnu loader frameworks userland
+
+xnu:
+	make -C Kernel \
+	SDKROOT=$(SDKROOT) \
+	RC_DARWIN_KERNEL_VERSION=$(KERNEL) \
+	MACHINE_CONFIGS=$(MACHINECONF)
+
+loader:
+
+frameworks:
+
+userland:

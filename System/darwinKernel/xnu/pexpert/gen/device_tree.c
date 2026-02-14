@@ -37,6 +37,7 @@
 #include <mach/machine/vm_types.h>
 #include <kern/debug.h>
 #include <kern/kern_types.h>
+#include <kern/zalloc.h>
 #include <kern/kalloc.h>
 #include <libkern/kernel_mach_header.h>
 #include <os/overflow.h>
@@ -426,7 +427,7 @@ SecureDTExitEntry(DTEntryIterator iter, DTEntry *currentPosition)
 	iter->currentIndex = newScope->index;
 	*currentPosition = iter->currentEntry;
 
-	kfree_type(struct DTSavedScope, newScope);
+	kfree_data(newScope, sizeof(struct DTSavedScope));
 
 	return kSuccess;
 }

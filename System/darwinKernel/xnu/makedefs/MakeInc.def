@@ -322,11 +322,21 @@ CFLAGS_GEN = $(DEBUG_CFLAGS) -nostdinc \
 	-fno-builtin \
 	-fno-common \
 	-ftrivial-auto-var-init=zero \
-	-enable-trivial-auto-var-init-zero-knowing-it-will-be-removed-from-clang \
+	-std=gnu99 \
 	-fsigned-bitfields \
 	-fmerge-all-constants \
 	-fno-c++-static-destructors \
 	$(OTHER_CFLAGS)
+
+# Filter out C-specific flags for C++ compilation
+CXXFLAGS_FILTERED = $(filter-out -std=gnu99, $(CFLAGS_GEN))
+
+CXXFLAGS_GEN  = -std=gnu++1z -fsized-deallocation -fapple-kext $(OTHER_CXXFLAGS)
+
+# C++ flags include filtered C flags to avoid C-specific options
+CXXFLAGS = $(CXXFLAGS_GEN) $(CXXFLAGS_FILTERED) \
+		  $($(addsuffix $(CURRENT_ARCH_CONFIG),CXXFLAGS_)) \
+		  $($(addsuffix $(CURRENT_KERNEL_CONFIG),CXXFLAGS_))
 
 CFLAGS_RELEASE	=
 CFLAGS_DEVELOPMENT	=
@@ -579,12 +589,6 @@ CFLAGS	= $(CFLAGS_GEN) \
 #
 
 OTHER_CXXFLAGS	=
-
-CXXFLAGS_GEN  = -std=gnu++1z -fsized-deallocation -fapple-kext $(OTHER_CXXFLAGS)
-
-CXXFLAGS      = $(CXXFLAGS_GEN) \
-		  $($(addsuffix $(CURRENT_ARCH_CONFIG),CXXFLAGS_)) \
-		  $($(addsuffix $(CURRENT_KERNEL_CONFIG),CXXFLAGS_))
 
 #
 # Assembler command

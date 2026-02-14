@@ -43,7 +43,10 @@ __BEGIN_DECLS
  * @abstract
  * The opaque type of a lock group.
  */
+#ifndef _LCK_GRP_T_DEFINED
+#define _LCK_GRP_T_DEFINED
 typedef struct _lck_grp_        lck_grp_t;
+#endif
 #define LCK_GRP_NULL            ((lck_grp_t *)NULL)
 
 /*!
@@ -52,7 +55,10 @@ typedef struct _lck_grp_        lck_grp_t;
  * @abstract
  * The opaque type for attributes to a group.
  */
+#ifndef _LCK_GRP_ATTR_T_DEFINED
+#define _LCK_GRP_ATTR_T_DEFINED
 typedef struct _lck_grp_attr_   lck_grp_attr_t;
+#endif
 #define LCK_GRP_ATTR_NULL       ((lck_grp_attr_t *)NULL)
 
 extern lck_grp_attr_t  *lck_grp_attr_alloc_init(
@@ -134,6 +140,8 @@ typedef struct _lck_grp_stats_ {
 
 #define LCK_GRP_MAX_NAME        64
 
+#ifndef _LCK_GRP_T_DEFINED
+#define _LCK_GRP_T_DEFINED
 typedef struct _lck_grp_ {
 	queue_chain_t           lck_grp_link;
 	os_refcnt_t             lck_grp_refcnt;
@@ -145,10 +153,14 @@ typedef struct _lck_grp_ {
 	char                    lck_grp_name[LCK_GRP_MAX_NAME];
 	lck_grp_stats_t         lck_grp_stats;
 } lck_grp_t;
+#endif
 
+#ifndef _LCK_GRP_ATTR_T_DEFINED
+#define _LCK_GRP_ATTR_T_DEFINED
 typedef struct _lck_grp_attr_ {
 	lck_grp_options_t       grp_attr_val;
 } lck_grp_attr_t;
+#endif
 
 struct lck_grp_spec {
 	lck_grp_t              *grp;

@@ -50,6 +50,11 @@ void
 pe_init_debug(void)
 {
 	boolean_t boot_arg_value;
+	int factor;
+	boolean_t have_bootarg;
+	DTEntry root;
+	void const *prop;
+	uint32_t size;
 
 	gPEKernelConfigurationBitmask = 0;
 
@@ -82,16 +87,12 @@ pe_init_debug(void)
 #endif
 	gPEKernelConfigurationBitmask |= (boot_arg_value ? kPEICanHasDiagnosticAPI : 0);
 
-
-	int factor = 1;
-	boolean_t have_bootarg = PE_parse_boot_argn("cpu-factor", &factor, sizeof(factor));
+	factor = 1;
+	have_bootarg = PE_parse_boot_argn("cpu-factor", &factor, sizeof(factor));
 	if (have_bootarg) {
 		debug_cpu_performance_degradation_factor = factor;
 	} else {
-		DTEntry         root;
 		if (SecureDTLookupEntry(NULL, "/", &root) == kSuccess) {
-			void const *prop = NULL;
-			uint32_t size = 0;
 			if (SecureDTGetProperty(root, "target-is-fpga", &prop, &size) == kSuccess) {
 				debug_cpu_performance_degradation_factor = 10;
 			}

@@ -1,0 +1,55 @@
+# Makefile for FreeBoard - Modern OpenGL-based launcher
+# Usage: make or make freeboard_new
+
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -O2
+INCLUDES = -I.
+LIBS = -lX11 -framework OpenGL -framework GLUT -lm
+DEFINES = -DSTB_IMAGE_IMPLEMENTATION
+
+SOURCES = main_new.cpp FreeBoardUI.cpp
+TARGET = freeboard_new
+OBJECTS = $(SOURCES:.cpp=.o)
+
+.PHONY: all clean help
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^ $(LIBS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+clean:
+	rm -f $(OBJECTS) $(TARGET)
+
+help:
+	@echo "FreeBoard Makefile"
+	@echo "=================="
+	@echo "Targets:"
+	@echo "  all      - Build FreeBoard (default)"
+	@echo "  clean    - Remove built files"
+	@echo "  help     - Show this help"
+	@echo ""
+	@echo "Usage:"
+	@echo "  make                # Build freeboard_new"
+	@echo "  make clean          # Clean build files"
+	@echo ""
+	@echo "Run FreeBoard:"
+	@echo "  ./freeboard_new                    # Default 800x600"
+	@echo "  ./freeboard_new -r 1024x768        # Custom resolution"
+	@echo "  ./freeboard_new -r 1280x720 -w bg.png  # With wallpaper"
+
+install: $(TARGET)
+	cp $(TARGET) /usr/local/bin/
+
+uninstall:
+	rm -f /usr/local/bin/$(TARGET)
+
+debug: CXXFLAGS += -g -DDEBUG
+debug: $(TARGET)
+
+# Dependencies
+main_new.o: main_new.cpp FreeBoardUI.h
+FreeBoardUI.o: FreeBoardUI.cpp FreeBoardUI.h stb_image.h
