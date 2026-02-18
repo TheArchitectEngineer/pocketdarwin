@@ -926,7 +926,7 @@ vn_rdwr_64(
 	int spacetype;
 	struct vfs_context context;
 	int error = 0;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(1)];
+	uint8_t uio_buf[UIO_SIZEOF(1)];
 
 	context.vc_thread = current_thread();
 	context.vc_ucred = cred;

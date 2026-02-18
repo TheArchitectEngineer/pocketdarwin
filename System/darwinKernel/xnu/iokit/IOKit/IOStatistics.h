@@ -29,9 +29,9 @@
 #ifndef _IOKIT_STATISTICS_H
 #define _IOKIT_STATISTICS_H
 
-#define IOSTATISTICS_SIG            'IOST'
-#define IOSTATISTICS_SIG_USERCLIENT 'IOSU'
-#define IOSTATISTICS_SIG_WORKLOOP   'IOSW'
+#define IOSTATISTICS_SIG            0x494f5348  // 'IOST'
+#define IOSTATISTICS_SIG_USERCLIENT 0x49534f55  // 'IOSU'
+#define IOSTATISTICS_SIG_WORKLOOP   0x49535757  // 'IOSW'
 
 /* Update when the binary format changes */
 #define IOSTATISTICS_VER                        0x2

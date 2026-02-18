@@ -308,10 +308,10 @@ CFLAGS_GEN = $(DEBUG_CFLAGS) -nostdinc \
 	-fno-builtin \
 	-fno-common \
 	-ftrivial-auto-var-init=zero \
-	-enable-trivial-auto-var-init-zero-knowing-it-will-be-removed-from-clang \
 	-fsigned-bitfields \
 	-fmerge-all-constants \
 	-fno-c++-static-destructors \
+	-w \
 	$(OTHER_CFLAGS)
 
 CFLAGS_RELEASE	=
@@ -640,8 +640,7 @@ LDFLAGS_KERNEL_GEN = \
 	-Wl,-function_starts \
 	-Wl,-headerpad,152
 
-# LDFLAGS_KERNEL_SDK	= -L$(SDKROOT)/usr/local/lib/kernel -lfirehose_kernel
-LDFLAGS_KERNEL_SDK	= -L$(SDKROOT)/usr/local/lib/kernel
+LD_KERNEL_ARCHIVES = # $(LDFLAGS_KERNEL_SDK) -lfirehose_kernel
 
 LDFLAGS_KERNEL_RELEASE	=
 LDFLAGS_KERNEL_DEVELOPMENT     =
@@ -876,7 +875,7 @@ LDFILES_KERNEL_ONLY = $(TARGET)/all-kpi.exp $(TARGET)/all-alias.exp $(TARGET)/sy
 # Default runtime libraries to be linked with the kernel
 #
 LD_KERNEL_LIBS	   = -lcc_kext
-LD_KERNEL_ARCHIVES = $(LDFLAGS_KERNEL_SDK) -lfirehose_kernel
+LD_KERNEL_ARCHIVES = # $(LDFLAGS_KERNEL_SDK) -lfirehose_kernel
 # Link opensource binary library
 ifneq ($(filter T6000 T8101 VMAPPLE T6000 T8101 VMAPPLE,$(CURRENT_MACHINE_CONFIG)),)
 	LDFLAGS_KERNEL_ONLY += -rdynamic -Wl,-force_load,$(KDKROOT)/System/Library/KernelSupport/lib$(CURRENT_MACHINE_CONFIG).os.$(CURRENT_KERNEL_CONFIG).a

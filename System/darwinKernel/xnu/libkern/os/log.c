@@ -30,7 +30,7 @@
 
 #include <firehose/tracepoint_private.h>
 #include <firehose/chunk_private.h>
-#include <os/firehose_buffer_private.h>
+// #include <os/firehose_buffer_private.h>
 #include <os/firehose.h>
 
 #include <os/log_private.h>
@@ -569,13 +569,14 @@ _firehose_trace(firehose_stream_t stream, firehose_tracepoint_id_u ftid,
 	const size_t __assert_only _firehose_chunk_payload_size = sizeof(((struct firehose_chunk_s *)0)->fc_data);
 	assert((ft_size + datalen) <= _firehose_chunk_payload_size);
 
-	firehose_tracepoint_t ft = __firehose_buffer_tracepoint_reserve(stamp, stream, (uint16_t)datalen, 0, NULL);
+	// firehose_tracepoint_t ft = firehose_chunk_tracepoint_try_reserve(NULL, stamp, stream, (uint16_t)datalen, 0, NULL, 0, NULL);
+	firehose_tracepoint_t ft = NULL;
 
 	if (fastpath(ft)) {
 		oslog_boot_done = true;
 
 		memcpy(ft->ft_data, data, datalen);
-		__firehose_buffer_tracepoint_flush(ft, ftid);
+		// __firehose_buffer_tracepoint_flush(ft, ftid);
 
 		if (stream == firehose_stream_metadata) {
 			counter_inc(&oslog_p_metadata_saved_msgcount);
@@ -710,7 +711,7 @@ __firehose_allocate(vm_offset_t *addr, vm_size_t size __unused)
 	// Now that we are done adding logs to this chunk, set the number of writers to 0
 	// Without this, logd won't flush when the page is full
 	firehose_boot_chunk->fc_pos.fcp_refcnt = 0;
-	memcpy(&kernel_buffer[FIREHOSE_BUFFER_KERNEL_CHUNK_COUNT - 1], (const void *)firehose_boot_chunk, FIREHOSE_CHUNK_SIZE);
+	memcpy(&kernel_buffer[1], (const void *)firehose_boot_chunk, FIREHOSE_CHUNK_SIZE);
 	return;
 }
 // There isnt a lock held in this case.

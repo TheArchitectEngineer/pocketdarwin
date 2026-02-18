@@ -78,15 +78,14 @@ kc_kind2index(kc_kind_t type)
 void
 PE_set_kc_header(kc_kind_t type, kernel_mach_header_t *header, uintptr_t slide)
 {
+	struct load_command *lc;
+	struct segment_command_64 *seg;
+	uint64_t lowest_vmaddr = ~0ULL;
 	kc_index_t i = kc_kind2index(type);
 	assert(!collection_base_pointers[i]);
 	assert(!collection_mach_headers[i]);
 	collection_mach_headers[i] = header;
 	collection_slide[i] = slide;
-
-	struct load_command *lc;
-	struct segment_command_64 *seg;
-	uint64_t lowest_vmaddr = ~0ULL;
 
 	lc = (struct load_command *)((uintptr_t)header + sizeof(*header));
 	for (uint32_t j = 0; j < header->ncmds; j++,
@@ -107,11 +106,11 @@ PE_set_kc_header(kc_kind_t type, kernel_mach_header_t *header, uintptr_t slide)
 void
 PE_reset_kc_header(kc_kind_t type)
 {
+	kc_index_t i = kc_kind2index(type);
 	if (type == KCKindPrimary) {
 		return;
 	}
 
-	kc_index_t i = kc_kind2index(type);
 	collection_mach_headers[i] = 0;
 	collection_base_pointers[i] = 0;
 	collection_slide[i] = 0;

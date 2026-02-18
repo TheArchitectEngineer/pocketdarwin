@@ -71,11 +71,11 @@ __startup_func
 static void
 PE_init_kprintf(void)
 {
+	bool new_disable_serial_output = true;
+
 	if (PE_state.initialized == FALSE) {
 		panic("Platform Expert not initialized");
 	}
-
-	bool new_disable_serial_output = true;
 
 	if (debug_boot_arg & DB_KPRT) {
 		new_disable_serial_output = false;

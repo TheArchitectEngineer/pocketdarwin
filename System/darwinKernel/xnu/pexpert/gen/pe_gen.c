@@ -50,6 +50,8 @@ void
 pe_init_debug(void)
 {
 	boolean_t boot_arg_value;
+	int factor;
+	boolean_t have_bootarg;
 
 	gPEKernelConfigurationBitmask = 0;
 
@@ -82,9 +84,7 @@ pe_init_debug(void)
 #endif
 	gPEKernelConfigurationBitmask |= (boot_arg_value ? kPEICanHasDiagnosticAPI : 0);
 
-
-	int factor = 1;
-	boolean_t have_bootarg = PE_parse_boot_argn("cpu-factor", &factor, sizeof(factor));
+	have_bootarg = PE_parse_boot_argn("cpu-factor", &factor, sizeof(factor));
 	if (have_bootarg) {
 		debug_cpu_performance_degradation_factor = factor;
 	} else {

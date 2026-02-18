@@ -1473,11 +1473,14 @@ static inline
 char *
 kcdata_iter_string(kcdata_iter_t iter, uint32_t offset)
 {
+	uint32_t maxlen;
+	char *s;
+
 	if (offset > kcdata_iter_size(iter)) {
 		return NULL;
 	}
-	uint32_t maxlen = kcdata_iter_size(iter) - offset;
-	char *s = ((char*)kcdata_iter_payload(iter)) + offset;
+	maxlen = kcdata_iter_size(iter) - offset;
+	s = ((char*)kcdata_iter_payload(iter)) + offset;
 	if (strnlen(s, maxlen) < maxlen) {
 		return s;
 	} else {

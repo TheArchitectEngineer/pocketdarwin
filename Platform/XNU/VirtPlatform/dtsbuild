@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mkdir -p ../../BUILD/DTB
+dtc -I dts -O dtb -o ../../BUILD/DTB/VirtPlatform.dtb Device.dts

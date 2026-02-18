@@ -252,7 +252,7 @@ file_io(struct vnode * vp, vfs_context_t ctx,
 {
 	uio_t           auio;
 	int             error;
-	uio_stackbuf_t  uio_buf[UIO_SIZEOF(1)];
+	uint8_t uio_buf[UIO_SIZEOF(1)];
 
 	auio = uio_createwithbuffer(1, offset, UIO_SYSSPACE, op,
 	    &uio_buf[0], sizeof(uio_buf));

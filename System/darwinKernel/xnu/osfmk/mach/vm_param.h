@@ -562,11 +562,13 @@ vm_unpack_pointer(vm_offset_t packed, vm_packing_params_t params)
 static inline vm_offset_t
 vm_packing_max_packable(vm_packing_params_t params)
 {
+	vm_offset_t ptr;
+
 	if (!params.vmpp_base_relative) {
 		return VM_MAX_KERNEL_ADDRESS;
 	}
 
-	vm_offset_t ptr = params.vmpp_base +
+	ptr = params.vmpp_base +
 	    (((1ul << params.vmpp_bits) - 1) << params.vmpp_shift);
 
 	return ptr >= params.vmpp_base ? ptr : VM_MAX_KERNEL_ADDRESS;

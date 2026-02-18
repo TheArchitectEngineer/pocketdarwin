@@ -771,7 +771,7 @@ nfsrv_readlink(
 	struct nfsm_chain *nmreq, nmrep;
 	mbuf_t mpath, mp;
 	uio_t auio = NULL;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(4)];
+	uint8_t uio_buf[UIO_SIZEOF(4)];
 	char *uio_bufp = &uio_buf[0];
 	int uio_buflen = UIO_SIZEOF(4);
 
@@ -916,11 +916,12 @@ nfsrv_read(
 	struct nfs_export *nx = NULL;
 	struct nfs_export_options *nxo;
 	uio_t auio = NULL;
+	uint8_t uio_buf[UIO_SIZEOF(4)];
 	char *uio_bufp = NULL;
 	struct vnode_attr vattr, *vap = &vattr;
 	off_t off;
 	uid_t saved_uid;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(0)];
+	uint8_t uio_stackbuf[UIO_SIZEOF(0)];
 	struct nfsm_chain *nmreq, nmrep;
 
 	error = 0;
@@ -3573,7 +3574,7 @@ nfsrv_symlink(
 	struct nfs_export *nx = NULL;
 	struct nfs_export_options *nxo = NULL;
 	uio_t auio = NULL;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(1)];
+	uint8_t uio_buf[UIO_SIZEOF(1)];
 	struct nfsm_chain *nmreq, nmrep;
 	__unused const int nfs_vers = nd->nd_vers;
 	assert(nd->nd_vers == NFS_VER2 || nd->nd_vers == NFS_VER3);
@@ -4229,7 +4230,7 @@ nfsrv_readdir(
 	struct nfs_export *nx;
 	struct nfs_export_options *nxo;
 	uio_t auio = NULL;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(1)];
+	uint8_t uio_buf[UIO_SIZEOF(1)];
 	int len, nlen, rem, xfer, error, attrerr;
 	int siz, count, fullsiz, eofflag, nentries;
 	u_quad_t off, toff, verf = 0;
@@ -4476,7 +4477,7 @@ nfsrv_readdirplus(
 	struct nfs_export *nx;
 	struct nfs_export_options *nxo;
 	uio_t auio = NULL;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(1)];
+	uint8_t uio_buf[UIO_SIZEOF(1)];
 	struct vnode_attr attr, va, *vap = &va;
 	int len, nlen, rem, xfer, error, attrerr, gotfh, gotattr;
 	int siz, dircount, maxcount, fullsiz, eofflag, dirlen, nentries, isdotdot;

@@ -1005,7 +1005,7 @@ ttioctl_locked(struct tty *tp, u_long cmd, caddr_t data, int flag, proc_t p)
 	struct uthread *ut;
 	struct pgrp *pg, *oldpg;
 	struct session *sessp, *oldsessp;
-	struct tty *oldtp, *freetp;
+	struct tty *oldtp, *freetp = NULL;
 
 	TTY_LOCK_OWNED(tp);     /* debug assert */
 
@@ -3226,19 +3226,21 @@ ttydeallocate(struct tty *tp)
 static bool
 isbackground(proc_t p, struct tty *tp)
 {
+	struct knote *kn;
+	struct selinfo *si;
+	
 	TTY_LOCK_OWNED(tp);
 
 	if (tp->t_pgrp == NULL || tp->t_pgrp == hazard_ptr_load(&p->p_pgrp)) {
 		return false;
 	}
 
-	if (tp->t_session == SESSION_NULL) {
-		return false;
-	}
+	/* Attach to knote to selinfo's klist and take a ref */
+	ttyhold(tp);
+	kn->kn_hook = tp;
+	KNOTE_ATTACH(&si->si_note, kn);
 
-	/*
-	 * same as isctty_sp(p, tp, p->p_pgrp->pg_session)
-	 * without dereferencing p->p_pgrp
+	/* without dereferencing p->p_pgrp
 	 */
 	return tp->t_session->s_sid == proc_sessionid(p) && (p->p_flag & P_CONTROLT);
 }

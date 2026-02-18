@@ -7,4 +7,6 @@
 BUILD/
 DerivedData/
 build-xnu/
-System/xnu
+System/
+*.System
+*.app

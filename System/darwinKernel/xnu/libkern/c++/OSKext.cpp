@@ -35,7 +35,7 @@ extern "C" {
 #include <kern/kext_alloc.h>
 #include <firehose/tracepoint_private.h>
 #include <firehose/chunk_private.h>
-#include <os/firehose_buffer_private.h>
+// #include <os/firehose_buffer_private.h>
 #include <vm/vm_map.h>
 #include <kextd/kextd_mach.h>
 #include <libkern/kernel_mach_header.h>

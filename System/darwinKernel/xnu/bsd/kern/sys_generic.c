@@ -365,7 +365,7 @@ dofileread(vfs_context_t ctx, struct fileproc *fp,
 	uio_t auio;
 	user_ssize_t bytecnt;
 	int error = 0;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(1)];
+	uint8_t uio_buf[UIO_SIZEOF(1)];
 
 	if (nbyte > INT_MAX) {
 		return EINVAL;
@@ -620,7 +620,7 @@ dofilewrite(vfs_context_t ctx, struct fileproc *fp,
 	uio_t auio;
 	int error = 0;
 	user_ssize_t bytecnt;
-	uio_stackbuf_t uio_buf[UIO_SIZEOF(1)];
+	uint8_t uio_buf[UIO_SIZEOF(1)];
 
 	if (nbyte > INT_MAX) {
 		*retval = 0;

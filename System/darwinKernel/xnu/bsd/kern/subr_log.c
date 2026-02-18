@@ -74,7 +74,7 @@
 #include <firehose/tracepoint_private.h>
 #include <firehose/chunk_private.h>
 #include <firehose/ioctl_private.h>
-#include <os/firehose_buffer_private.h>
+// #include <os/firehose_buffer_private.h>
 
 #include <os/log_private.h>
 #include <sys/ioctl.h>
@@ -106,10 +106,8 @@ extern void oslog_streamwakeup(void);
 extern bool os_log_disabled(void);
 
 SECURITY_READ_ONLY_LATE(vm_offset_t) kernel_firehose_addr = 0;
-SECURITY_READ_ONLY_LATE(uint8_t) __firehose_buffer_kernel_chunk_count =
-    FIREHOSE_BUFFER_KERNEL_DEFAULT_CHUNK_COUNT;
-SECURITY_READ_ONLY_LATE(uint8_t) __firehose_num_kernel_io_pages =
-    FIREHOSE_BUFFER_KERNEL_DEFAULT_IO_PAGES;
+SECURITY_READ_ONLY_LATE(uint8_t) __firehose_buffer_kernel_chunk_count = 1;
+	// FIREHOSE_BUFFER_KERNEL_DEFAULT_IO_PAGES;
 
 uint32_t oslog_msgbuf_dropped_charcount = 0;
 
@@ -1120,7 +1118,7 @@ oslogioctl(__unused dev_t dev, u_long com, caddr_t data, __unused int flag, __un
 		}
 		break;
 	case LOGFLUSHED:
-		has_more = __firehose_merge_updates(*(firehose_push_reply_t *)(data));
+		// has_more = __firehose_merge_updates(*(firehose_push_reply_t *)(data));
 		bsd_log_lock_safe();
 		os_log_wakeup = has_more;
 		if (os_log_wakeup) {
@@ -1177,16 +1175,14 @@ oslog_init_firehose(void)
 
 	kern_return_t kr;
 	if (!PE_parse_boot_argn("firehose_chunk_count", &__firehose_buffer_kernel_chunk_count, sizeof(__firehose_buffer_kernel_chunk_count))) {
-		__firehose_buffer_kernel_chunk_count = FIREHOSE_BUFFER_KERNEL_DEFAULT_CHUNK_COUNT;
+		// __firehose_buffer_kernel_chunk_count = FIREHOSE_BUFFER_KERNEL_DEFAULT_CHUNK_COUNT;
 	}
-	if (!PE_parse_boot_argn("firehose_io_pages", &__firehose_num_kernel_io_pages, sizeof(__firehose_num_kernel_io_pages))) {
-		__firehose_num_kernel_io_pages = FIREHOSE_BUFFER_KERNEL_DEFAULT_IO_PAGES;
-	}
-	if (!__firehose_kernel_configuration_valid(__firehose_buffer_kernel_chunk_count, __firehose_num_kernel_io_pages)) {
-		printf("illegal firehose configuration %u/%u, using defaults\n", __firehose_buffer_kernel_chunk_count, __firehose_num_kernel_io_pages);
-		__firehose_buffer_kernel_chunk_count = FIREHOSE_BUFFER_KERNEL_DEFAULT_CHUNK_COUNT;
-		__firehose_num_kernel_io_pages = FIREHOSE_BUFFER_KERNEL_DEFAULT_IO_PAGES;
-	}
+	// if (!PE_parse_boot_argn("firehose_io_pages", &__firehose_num_kernel_io_pages, sizeof(__firehose_num_kernel_io_pages))) {
+	//	__firehose_num_kernel_io_pages = FIREHOSE_BUFFER_KERNEL_DEFAULT_IO_PAGES;
+	//}
+	// if (!__firehose_kernel_configuration_valid(__firehose_buffer_kernel_chunk_count, __firehose_num_kernel_io_pages)) {
+	//	printf("illegal firehose configuration %u/%u, using defaults\n", __firehose_buffer_kernel_chunk_count, __firehose_num_kernel_io_pages);
+	//}
 	vm_size_t size = __firehose_buffer_kernel_chunk_count * FIREHOSE_CHUNK_SIZE;
 
 	kr = kernel_memory_allocate(kernel_map, &kernel_firehose_addr,
@@ -1198,10 +1194,8 @@ oslog_init_firehose(void)
 	}
 	kernel_firehose_addr += PAGE_SIZE;
 	/* register buffer with firehose */
-	kernel_firehose_addr = (vm_offset_t)__firehose_buffer_create((size_t *) &size);
-
-	printf("Firehose configured: %u chunks, %u io pages\n",
-	    __firehose_buffer_kernel_chunk_count, __firehose_num_kernel_io_pages);
+	// printf("Firehose configured: %u chunks, %u io pages\n",
+	//    __firehose_buffer_kernel_chunk_count, __firehose_num_kernel_io_pages);
 }
 STARTUP(OSLOG, STARTUP_RANK_SECOND, oslog_init_firehose);
 

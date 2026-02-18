@@ -62,3 +62,9 @@ __MACOSX/
 *.orig
 *~
 
+# --- Tarballs ---
+*.tar.gz
+*.tar.xz
+*.tar
+*.xz
+*.bz2
