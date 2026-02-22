@@ -7,6 +7,8 @@
 ## What This Repo Is
 PocketDarwin is an Darwin port for Android hardware.
 
+>[!NEW] Discord server now available on https://discord.gg/bthwXwh8vP
+
 ## Installation instructions
 
 >[!NOTE] PocketDarwin will never ships pre-built linux interludes!! Only system bundles are released.
