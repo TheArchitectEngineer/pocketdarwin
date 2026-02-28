@@ -2,7 +2,7 @@ use anyhow::{anyhow, bail, Context, Result};
 use clap::{Parser, Subcommand, ValueEnum};
 use colored::*;
 use plist::Value;
-use std::collections::BTreeMap;
+use plist::Dictionary;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
@@ -77,43 +77,43 @@ impl IPhoneOSReportingVersion {
 
 #[derive(Clone, ValueEnum)]
 enum MacOSReportingVersion {
-    V10_4,
+//    V10_4,
     V10_5,
     V10_6,
-    V10_7,
-    V10_8,
-    V10_9,
-    V10_10,
-    V10_11,
-    V10_12,
-    V10_13,
-    V10_14,
-    V10_15,
-    V11,
-    V12,
-    V13,
-    V14,
+//    V10_7,
+//    V10_8,
+//    V10_9,
+//    V10_10,
+//    V10_11,
+//    V10_12,
+//    V10_13,
+//    V10_14,
+//    V10_15,
+//    V11,
+//    V12,
+//    V13,
+//    V14,
 }
 
 impl MacOSReportingVersion {
     fn as_str(&self) -> &'static str {
         match self {
-            Self::V10_4 => "10.4",
+//            Self::V10_4 => "10.4",
             Self::V10_5 => "10.5",
             Self::V10_6 => "10.6",
-            Self::V10_7 => "10.7",
-            Self::V10_8 => "10.8",
-            Self::V10_9 => "10.9",
-            Self::V10_10 => "10.10",
-            Self::V10_11 => "10.11",
-            Self::V10_12 => "10.12",
-            Self::V10_13 => "10.13",
-            Self::V10_14 => "10.14",
-            Self::V10_15 => "10.15",
-            Self::V11 => "11",
-            Self::V12 => "12",
-            Self::V13 => "13",
-            Self::V14 => "14",
+//            Self::V10_7 => "10.7",
+//            Self::V10_8 => "10.8",
+//            Self::V10_9 => "10.9",
+//            Self::V10_10 => "10.10",
+//            Self::V10_11 => "10.11",
+//            Self::V10_12 => "10.12",
+//            Self::V10_13 => "10.13",
+//            Self::V10_14 => "10.14",
+//            Self::V10_15 => "10.15",
+//            Self::V11 => "11",
+//            Self::V12 => "12",
+//            Self::V13 => "13",
+//            Self::V14 => "14",
         }
     }
 }
@@ -170,7 +170,7 @@ fn create(
         println!("  {} {}/", "✓".green(), dir);
     }
 
-    let mut system_plist = BTreeMap::new();
+    let mut system_plist = Dictionary::new();
     system_plist.insert("CFBundleName".into(), Value::String(name.clone()));
     system_plist.insert(
         "CFBundleIdentifier".into(),
@@ -219,7 +219,7 @@ fn create(
     }
 
     let file = fs::File::create(bundle_path.join("System.plist"))?;
-    Value::Dictionary(system_plist).to_writer_xml(file)?;
+    Value::Dictionary(system_plist).to_writer_xml(file)?; // expected `Dictionary`, found `BTreeMap<_, Value>`
 
     println!("  {} System.plist", "✓".green());
 
