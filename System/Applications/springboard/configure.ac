@@ -45,7 +45,7 @@ AC_ARG_WITH([sysroot],
         SDK_SEARCH="$XCODE_DIR/Platforms/iPhoneOS.platform/Developer/SDKs"
         SYSROOT=$(ls -d "$SDK_SEARCH/iPhoneOS2.0.sdk" 2>/dev/null | head -1)
         if test -z "$SYSROOT"; then
-            AC_MSG_WARN([iPhoneOS 2.0 SDK not found under $SDK_SEARCH; set --with-sysroot])
+            echo "configure: WARNING: iPhoneOS 2.0 SDK not found under $SDK_SEARCH; set --with-sysroot" >&2
             SYSROOT=""
         fi
     ])
@@ -100,18 +100,28 @@ AM_PROG_AR
 # Objective-C flags
 # ------------------------------------------------------------------
 
+AC_DEFUN([PD_CHECK_COMPILE_FLAG], [
+    AC_MSG_CHECKING([whether $OBJC supports $1])
+    pd_saved_OBJCFLAGS="$OBJCFLAGS"
+    OBJCFLAGS="$OBJCFLAGS $1"
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([], [])], [$2], [$3])
+    OBJCFLAGS="$pd_saved_OBJCFLAGS"
+    AC_MSG_RESULT([done])
+])
+
 # -fobjc-exceptions: needed for @try/@catch in UIKit callbacks
-AX_CHECK_COMPILE_FLAG([-fobjc-exceptions],
+PD_CHECK_COMPILE_FLAG([-fobjc-exceptions],
     [OBJCFLAGS="$OBJCFLAGS -fobjc-exceptions"],
-    [AC_MSG_WARN([-fobjc-exceptions not supported; exception handling disabled])])
+    [echo "configure: WARNING: -fobjc-exceptions not supported; exception handling disabled" >&2])
 
 # Strict warnings
-AX_CHECK_COMPILE_FLAG([-Wall],   [OBJCFLAGS="$OBJCFLAGS -Wall"])
-AX_CHECK_COMPILE_FLAG([-Wextra], [OBJCFLAGS="$OBJCFLAGS -Wextra"])
+PD_CHECK_COMPILE_FLAG([-Wall],   [OBJCFLAGS="$OBJCFLAGS -Wall"], [:])
+PD_CHECK_COMPILE_FLAG([-Wextra], [OBJCFLAGS="$OBJCFLAGS -Wextra"], [:])
 
 # iPhoneOS 2.0: no ARC.  If the compiler erroneously enables it, turn it off.
-AX_CHECK_COMPILE_FLAG([-fno-objc-arc],
-    [OBJCFLAGS="$OBJCFLAGS -fno-objc-arc"])
+PD_CHECK_COMPILE_FLAG([-fno-objc-arc],
+    [OBJCFLAGS="$OBJCFLAGS -fno-objc-arc"],
+    [:])
 
 # ------------------------------------------------------------------
 # Required Apple frameworks (link-time)
@@ -161,7 +171,7 @@ AC_CHECK_HEADER([Foundation/Foundation.h],
 
 AC_CHECK_HEADER([QuartzCore/QuartzCore.h],
     [],
-    [AC_MSG_WARN([QuartzCore/QuartzCore.h not found — CALayer animations may not compile])])
+    [echo "configure: WARNING: QuartzCore/QuartzCore.h not found; CALayer animations may not compile" >&2])
 
 AC_LANG_POP([Objective C])
 
@@ -176,7 +186,7 @@ AC_MSG_CHECKING([for UIPageControl (iPhoneOS 2.0+)])
 AC_COMPILE_IFELSE(
     [AC_LANG_PROGRAM(
         [#import <UIKit/UIKit.h>],
-        [UIPageControl *pc = [[UIPageControl alloc] init]; (void)pc;])],
+        [UIPageControl *pc = (UIPageControl *)0; (void)pc;])],
     [AC_MSG_RESULT([yes])],
     [AC_MSG_FAILURE([UIPageControl not available — SDK is not iPhoneOS 2.0])])
 
@@ -185,9 +195,9 @@ AC_MSG_CHECKING([for CAKeyframeAnimation])
 AC_COMPILE_IFELSE(
     [AC_LANG_PROGRAM(
         [#import <QuartzCore/QuartzCore.h>],
-        [CAKeyframeAnimation *a = [CAKeyframeAnimation animation]; (void)a;])],
+        [CAKeyframeAnimation *a = (CAKeyframeAnimation *)0; (void)a;])],
     [AC_MSG_RESULT([yes])],
-    [AC_MSG_WARN([CAKeyframeAnimation not found — icon wiggle will be disabled])])
+    [echo "configure: WARNING: CAKeyframeAnimation not found; icon wiggle will be disabled" >&2])
 
 AC_LANG_POP([Objective C])
 

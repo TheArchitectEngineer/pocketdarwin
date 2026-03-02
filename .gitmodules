@@ -1,4 +1,2 @@
 
-[submodule "Android/touchHLE"]
-	path = Android/touchHLE
-	url = https://github.com/touchHLE/touchHLE.git
+

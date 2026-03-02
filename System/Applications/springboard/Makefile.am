@@ -22,8 +22,18 @@ AUTOMAKE_OPTIONS = foreign subdir-objects
 # These are set by configure and exported into Makefile via AC_SUBST.
 # We re-list them here so Automake passes them to the right tools.
 
+IPHONEOS_SYSROOT = /Developer/Platforms/iPhoneOS.platform/iPhoneOS3.2.sdk
+IPHONEOS_CRT1    = $(IPHONEOS_SYSROOT)/usr/lib/crt1.o
+
+OBJC = clang
+
 AM_OBJCFLAGS = \
     $(OBJCFLAGS) \
+    -target armv6-apple-darwin9 \
+    -isysroot $(IPHONEOS_SYSROOT) \
+    -march=armv6 \
+    -mthumb \
+    -miphoneos-version-min=2.0 \
     -IHeaders
 
 AM_CFLAGS = \
@@ -68,8 +78,18 @@ EXTRA_DIST = \
     Resources/Info.plist
 
 # Per-target LDADD: the framework flags resolved by configure
-SpringBoard_LDADD   = $(FRAMEWORK_LIBS)
-SpringBoard_LDFLAGS = $(AM_LDFLAGS)
+SpringBoard_LDADD = \
+    -lSystem
+
+SpringBoard_LINK = \
+    /opt/darwin/bin/arm-apple-darwin9-ld \
+    -arch armv6 \
+    -syslibroot $(IPHONEOS_SYSROOT) \
+    -o $@ \
+    $(IPHONEOS_CRT1)
+
+SpringBoard_LDFLAGS = \
+    -framework UIKit
 
 # ── .app bundle assembly ─────────────────────────────────────────────────────
 #

@@ -19,8 +19,18 @@ AUTOMAKE_OPTIONS = foreign subdir-objects
 
 # ── Per-target compile flags ─────────────────────────────────────────────────
 
+IPHONEOS_SYSROOT = /Developer/Platforms/iPhoneOS.platform/iPhoneOS3.2.sdk
+IPHONEOS_CRT1    = $(IPHONEOS_SYSROOT)/usr/lib/crt1.o
+
+OBJC = clang
+
 AM_OBJCFLAGS = \
     $(OBJCFLAGS) \
+    -target armv6-apple-darwin9 \
+    -isysroot $(IPHONEOS_SYSROOT) \
+    -march=armv6 \
+    -mthumb \
+    -miphoneos-version-min=2.0 \
     -IHeaders
 
 AM_CFLAGS = \
@@ -90,8 +100,18 @@ EXTRA_DIST = \
     Headers/PSAboutController.h         \
     Resources/Info.plist
 
-Settings_LDADD   = $(FRAMEWORK_LIBS)
-Settings_LDFLAGS = $(AM_LDFLAGS)
+Settings_LDADD = \
+    -lSystem
+
+Settings_LINK = \
+    /opt/darwin/bin/arm-apple-darwin9-ld \
+    -arch armv6 \
+    -syslibroot $(IPHONEOS_SYSROOT) \
+    -o $@ \
+    $(IPHONEOS_CRT1)
+
+Settings_LDFLAGS = \
+    -framework UIKit
 
 # ── .app bundle assembly ──────────────────────────────────────────────────────
 
