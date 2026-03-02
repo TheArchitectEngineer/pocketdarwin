@@ -17,8 +17,8 @@
 
 @interface PSDisplayController : PSViewController
 
-- (NSNumber *)getBrightness;
-- (void)setBrightness:(NSNumber *)value;
+- (NSNumber *)readBrightnessValue;
+- (void)applyBrightnessValue:(NSNumber *)value;
 
 @end
 
@@ -34,31 +34,18 @@
     return self;
 }
 
-- (NSNumber *)getBrightness
+- (NSNumber *)readBrightnessValue
 {
     id v = [self readPreferenceValue:[self specifierForKey:@"screenBrightness"]];
     if (v) return v;
-
-    /* Read from UIScreen on iPhoneOS 2.0 */
-    /* Note: [UIScreen mainScreen].brightness is available from 2.0 */
-    CGFloat brightness = [[UIScreen mainScreen] brightness];
-    return [NSNumber numberWithFloat:(float)brightness];
+    return [NSNumber numberWithFloat:0.5f];
 }
 
-- (void)setBrightness:(NSNumber *)value
+- (void)applyBrightnessValue:(NSNumber *)value
 {
     [self setPreferenceValue:value specifier:[self specifierForKey:@"screenBrightness"]];
 
-    /* Apply immediately */
-    CGFloat b = (CGFloat)[value floatValue];
-    [[UIScreen mainScreen] setBrightness:b];
-
-    /*
-     * On a real iPhoneOS 2.0 device, this is done via:
-     *   IOHIDEventSystemClientRef client = IOHIDEventSystemClientCreate(kCFAllocatorDefault);
-     *   ... (IOKit backlight ioctl)
-     * SpringBoard's MBBrightnessController manages this privately.
-     */
+    /* Runtime brightness apply is intentionally omitted in this SDK shim build. */
 }
 
 - (NSArray *)specifiers
@@ -70,8 +57,8 @@
 
     PSSpecifier *brightness = [PSSpecifier preferenceSpecifierNamed:nil
                                                              target:self
-                                                                set:@selector(setBrightness:)
-                                                                get:@selector(getBrightness)
+                                                                set:@selector(applyBrightnessValue:)
+                                                                get:@selector(readBrightnessValue)
                                                            cellType:PSSliderCell
                                                            editType:PSSliderCell];
     brightness.key = @"screenBrightness";

@@ -1,32 +1,41 @@
 /*
- * SBDock.h
+ * SBStatusBar.h
  * SpringBoard - PocketDarwin
- *
- * The dock at the bottom of the home screen.
- * iPhoneOS 2.0: holds exactly 4 icons, always visible.
- * Rendered with the frosted glass / shelf background.
- *
- * iPhoneOS 2.0 compatible.
  */
 
 #import <UIKit/UIKit.h>
 
-@class SBApplication;
+typedef enum {
+    SBStatusBarStyleDefault = 0,
+    SBStatusBarStyleBlack   = 1
+} SBStatusBarStyle;
 
-extern const NSInteger kSBDockMaxIcons;  /* 4 */
-extern const CGFloat   kSBDockHeight;   /* 90 */
+extern const CGFloat kSBStatusBarHeight;
 
-@interface SBDock : UIView {
-    NSMutableArray  *_dockIcons;
-    UIImageView     *_backgroundView;
+@interface SBStatusBar : UIView {
+    NSInteger        _signalStrength;
+    CGFloat          _batteryLevel;
+    BOOL             _batteryCharging;
+    BOOL             _wifiConnected;
+    NSString        *_carrierName;
+    SBStatusBarStyle _style;
+
+    UILabel         *_carrierLabel;
+    UILabel         *_timeLabel;
+    UIImageView     *_signalView;
+    UIImageView     *_wifiView;
+    UIImageView     *_batteryView;
+    NSTimer         *_clockTimer;
 }
 
-- (id)initWithFrame:(CGRect)frame;
+@property (nonatomic, assign) NSInteger        signalStrength;
+@property (nonatomic, assign) CGFloat          batteryLevel;
+@property (nonatomic, assign) BOOL             batteryCharging;
+@property (nonatomic, assign) BOOL             wifiConnected;
+@property (nonatomic, copy)   NSString        *carrierName;
+@property (nonatomic, assign) SBStatusBarStyle style;
 
-/* Set dock applications (max 4) */
-- (void)setApplications:(NSArray *)applications;
-
-/* Layout icon frames inside dock */
-- (void)layoutDockIcons;
+- (id)initWithFrame:(CGRect)frame style:(SBStatusBarStyle)style;
+- (void)refresh;
 
 @end

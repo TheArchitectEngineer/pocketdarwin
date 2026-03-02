@@ -113,8 +113,6 @@ static const CGFloat kScreenHeight = 480.0f;
     _pageControl = [[UIPageControl alloc] initWithFrame:
                     CGRectMake(0, dotY, kScreenWidth, 14.0f)];
     _pageControl.currentPage                = 0;
-    _pageControl.pageIndicatorTintColor     = [UIColor colorWithWhite:1.0f alpha:0.3f];
-    _pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
     [self addSubview:_pageControl];
 }
 
