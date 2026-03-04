@@ -1,3 +1,6 @@
+extern crate clap;
+use clap::{Arg, App, SubCommand};
+
 extern crate plist;
 #[macro_use]
 extern crate serde_derive;
@@ -12,4 +15,12 @@ struct SystemPkg {
     iphroot: Path,
 }
 
-// TODO: finish the implementation of CFSystemBundle.
+fn main() {
+    let matches = App::new("PocketDarwin System Bundle Manager & creator.")
+                                                .version("0.1.2-rs-r1")
+                                                .author("OakyMacintosh/Miguel V. Mesquita")
+                                                .about("This program is able to create & modify System bundles.")
+                                                .arg(Arg::with_name("rx")
+
+                                            )
+}

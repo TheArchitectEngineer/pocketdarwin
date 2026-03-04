@@ -181,6 +181,12 @@ impl Cpu {
             });
         let dynarmic_wrapper =
             unsafe { touchHLE_DynarmicWrapper_new(direct_memory_access_ptr, null_page_count) };
+        if unsafe { touchHLE_DynarmicWrapper_is_stub(dynarmic_wrapper) } {
+            panic!(
+                "CPU emulation backend is unavailable: dynarmic fallback stub is active. \
+Populate Android/touchHLE/vendor/dynarmic and rebuild."
+            );
+        }
         Cpu {
             dynarmic_wrapper,
             direct_memory_access_ptr,

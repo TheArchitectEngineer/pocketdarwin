@@ -897,6 +897,7 @@ dependencies = [
 name = "touchHLE_openal_soft_wrapper"
 version = "0.2.3"
 dependencies = [
+ "cc",
  "cmake",
 ]
 

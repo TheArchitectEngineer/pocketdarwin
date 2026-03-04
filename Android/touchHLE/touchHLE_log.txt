@@ -1,0 +1,14 @@
+touchHLE 98044f6 — https://touchhle.org/
+
+touchHLE: Base path for touchHLE files: .
+App bundle info:
+- Display name: SpringBoard
+- Version: 1.0
+- Identifier: com.pocketdarwin.SpringBoard
+- Internal name (canonical): SpringBoard.app
+- Minimum OS version: 2.0
+
+No options found for this app in touchHLE_default_options.txt
+No options found for this app in ./touchHLE_options.txt
+
+touchHLE::environment: Warning: Could not read icon file

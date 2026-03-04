@@ -13,6 +13,7 @@ CFLAGS_COMMON = \
 	-isysroot $(SDK_SYSROOT) \
 	-march=$(ARCH) \
 	-mthumb \
+	-fno-stack-protector \
 	-miphoneos-version-min=$(IPHONEOS_MIN) \
 	-IHeaders
 
@@ -33,6 +34,7 @@ PREFIX ?= /Applications
 DEVICE_IP ?= 192.168.1.100
 
 OBJECTS = $(SOURCES:.m=.o)
+INFOPLIST_SRC = $(wildcard $(INFOPLIST))
 
 .PHONY: all bundle install uninstall clean deploy
 
@@ -44,19 +46,17 @@ $(EXECUTABLE): $(OBJECTS)
 Sources/%.o: Sources/%.m
 	$(CC) $(CFLAGS_COMMON) -c $< -o $@
 
-bundle: $(BUNDLE_DIR)/Info.plist $(BUNDLE_DIR)/$(EXECUTABLE)
-
-$(BUNDLE_DIR):
-	$(MKDIR_P) "$@"
-
-$(BUNDLE_DIR)/Info.plist: | $(BUNDLE_DIR)
+bundle: $(BUNDLE_DIR)/$(EXECUTABLE) | $(BUNDLE_DIR)
 	@if [ -f "$(INFOPLIST)" ]; then \
-		$(INSTALL) -m 644 "$(INFOPLIST)" "$@"; \
+		$(INSTALL) -m 644 "$(INFOPLIST)" "$(BUNDLE_DIR)/Info.plist"; \
 	else \
 		printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>' \
 		'<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' \
-		'<plist version="1.0"><dict></dict></plist>' > "$@"; \
+		'<plist version="1.0"><dict></dict></plist>' > "$(BUNDLE_DIR)/Info.plist"; \
 	fi
+
+$(BUNDLE_DIR):
+	$(MKDIR_P) "$@"
 
 $(BUNDLE_DIR)/$(EXECUTABLE): $(EXECUTABLE) | $(BUNDLE_DIR)
 	$(INSTALL) -m 755 "$(EXECUTABLE)" "$@"

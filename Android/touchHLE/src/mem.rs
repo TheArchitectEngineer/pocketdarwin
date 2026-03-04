@@ -205,6 +205,69 @@ impl<T: SafeRead> SafeWrite for T {}
 
 type Bytes = [u8; 1 << 32];
 
+#[cfg(target_os = "linux")]
+unsafe fn alloc_guest_bytes() -> *mut Bytes {
+    use std::ffi::c_void;
+
+    unsafe extern "C" {
+        fn mmap(
+            addr: *mut c_void,
+            length: usize,
+            prot: i32,
+            flags: i32,
+            fd: i32,
+            offset: isize,
+        ) -> *mut c_void;
+    }
+
+    const PROT_READ: i32 = 0x1;
+    const PROT_WRITE: i32 = 0x2;
+    const MAP_PRIVATE: i32 = 0x02;
+    const MAP_ANONYMOUS: i32 = 0x20;
+    const MAP_NORESERVE: i32 = 0x4000;
+
+    let ptr = unsafe {
+        mmap(
+            std::ptr::null_mut(),
+            std::mem::size_of::<Bytes>(),
+            PROT_READ | PROT_WRITE,
+            MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE,
+            -1,
+            0,
+        )
+    };
+    if ptr as isize == -1 {
+        std::ptr::null_mut()
+    } else {
+        ptr.cast()
+    }
+}
+
+#[cfg(not(target_os = "linux"))]
+unsafe fn alloc_guest_bytes() -> *mut Bytes {
+    let layout = std::alloc::Layout::new::<Bytes>();
+    unsafe { std::alloc::alloc_zeroed(layout) as *mut Bytes }
+}
+
+#[cfg(target_os = "linux")]
+unsafe fn free_guest_bytes(bytes: *mut Bytes) {
+    use std::ffi::c_void;
+
+    unsafe extern "C" {
+        fn munmap(addr: *mut c_void, length: usize) -> i32;
+    }
+
+    let _ = unsafe { munmap(bytes.cast(), std::mem::size_of::<Bytes>()) };
+}
+
+#[cfg(not(target_os = "linux"))]
+unsafe fn free_guest_bytes(bytes: *mut Bytes) {
+    let layout = std::alloc::Layout::new::<Bytes>();
+    unsafe {
+        std::alloc::dealloc(bytes as *mut _, layout);
+    }
+}
+
 pub const PAGE_SIZE: GuestUSize = 4096;
 pub const PAGE_SIZE_ALIGN_MASK: GuestUSize = 0xfff;
 
@@ -252,9 +315,8 @@ pub struct Mem {
 
 impl Drop for Mem {
     fn drop(&mut self) {
-        let layout = std::alloc::Layout::new::<Bytes>();
         unsafe {
-            std::alloc::dealloc(self.bytes as *mut _, layout);
+            free_guest_bytes(self.bytes);
         }
     }
 }
@@ -275,13 +337,18 @@ impl Mem {
 
     /// Create a fresh instance of guest memory.
     pub fn new() -> Mem {
-        // This will hopefully get the host OS to lazily allocate the memory.
-        let layout = std::alloc::Layout::new::<Bytes>();
+        assert!(
+            std::mem::size_of::<usize>() >= std::mem::size_of::<u64>(),
+            "touchHLE requires a 64-bit host to map a full 4GiB guest address space"
+        );
         // TODO: align memory to guest page size
         // Right now, if aligned, will cause OOM on low end Android devices.
         // See relevant [Github's issue](https://github.com/touchHLE/touchHLE/issues/498)
-        let bytes = unsafe { std::alloc::alloc_zeroed(layout) as *mut Bytes };
-        assert!(!bytes.is_null());
+        let bytes = unsafe { alloc_guest_bytes() };
+        assert!(
+            !bytes.is_null(),
+            "Could not reserve guest memory (4GiB). Check virtual memory limits/overcommit settings."
+        );
 
         let allocator = allocator::Allocator::new();
 
