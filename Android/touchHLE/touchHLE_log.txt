@@ -1,4 +1,4 @@
-touchHLE 98044f6 — https://touchhle.org/
+touchHLE 39391ce — https://touchhle.org/
 
 touchHLE: Base path for touchHLE files: .
 App bundle info:
