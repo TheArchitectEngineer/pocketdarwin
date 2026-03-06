@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+
+    <key>CFBundleName</key>
+    <string>PocketDarwinExtensions</string>
+
+    <key>CFBundleIdentifier</key>
+    <string>dev.pocketdarwin.extensions</string>
+
+    <key>CFBundleExecutable</key>
+    <string>PocketDarwinExtensions</string>
+
+	<key>UTExportedTypeDeclarations</key>
+<array>
+ <dict>
+  <key>UTTypeIdentifier</key>
+  <string>dev.pocketdarwin.system</string>
+
+  <key>UTTypeDescription</key>
+  <string>PocketDarwin System Bundle</string>
+
+  <key>UTTypeConformsTo</key>
+  <array>
+   <string>com.apple.bundle</string>
+   <string>public.directory</string>
+  </array>
+
+  <key>UTTypeTagSpecification</key>
+  <dict>
+   <key>public.filename-extension</key>
+   <array>
+    <string>System</string>
+   </array>
+  </dict>
+ </dict>
+</array>
+<key>CFBundleDocumentTypes</key>
+<array>
+ <dict>
+  <key>CFBundleTypeName</key>
+  <string>PocketDarwin System Bundle</string>
+
+  <key>LSItemContentTypes</key>
+  <array>
+   <string>dev.pocketdarwin.system</string>
+  </array>
+
+  <key>CFBundleTypeIconFile</key>
+  <string>SystemFolderIcon</string>
+ </dict>
+</array>
+
+</dict>
+</plist>
