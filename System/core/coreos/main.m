@@ -11,8 +11,9 @@
 
 #import <Foundation/Foundation.h>
 #include <Foundation/NSObjCRuntime.h>
+#import "include/SystemHeader.h"
 
 int main() {
-    NSLog(@"CoreOS minnnn\n");
+    NSLog(@"CoreOS booting on %@", [FDSystemTypeIdentifier currentPlatformName]);
     return 0;
 }
