@@ -1,6 +1,35 @@
 {
     "configurations": [
         {
+            "name": "PocketDarwin iPhoneOS",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/System/Applications/**/Headers",
+                "${workspaceFolder}/Frameworks/**/Headers",
+                "${workspaceFolder}/Platform/**/Headers",
+                "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.2.sdk/usr/include",
+                "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.2.sdk/System/Library/Frameworks/UIKit.framework/Headers",
+                "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.2.sdk/System/Library/Frameworks/Foundation.framework/Headers",
+                "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.2.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers",
+                "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.2.sdk/System/Library/Frameworks/QuartzCore.framework/Headers"
+            ],
+            "defines": [
+                "__IPHONEOS__=1"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-arm",
+            "compilerArgs": [
+                "-target",
+                "armv6-apple-darwin9",
+                "-isysroot",
+                "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.2.sdk",
+                "-miphoneos-version-min=2.0",
+                "-fno-stack-protector"
+            ]
+        },
+        {
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",

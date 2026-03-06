@@ -9,3 +9,4 @@ DerivedData/
 build-xnu/
 System/xnu
 target/
+build/
