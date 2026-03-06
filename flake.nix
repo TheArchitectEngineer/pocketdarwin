@@ -2,37 +2,70 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
-  outputs = { self, nixpkgs }:
+
+  outputs = { nixpkgs, ... }:
     let
-      # Define the system architecture
-      system = "x86_64-linux"; # Replace with your system if different
-      pkgs = nixpkgs.legacyPackages.${system};
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+
+      forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
+
+      mkDevShell = system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          maybe = path: pkgs.lib.attrByPath path null pkgs;
+          isLinux = pkgs.stdenv.isLinux;
+          isDarwin = pkgs.stdenv.isDarwin;
+        in
+        pkgs.mkShell {
+          packages =
+            builtins.filter (p: p != null) (
+              [
+                # Core toolchain
+                pkgs.git
+                pkgs.rustc
+                pkgs.cargo
+                pkgs.gcc
+                pkgs.clang
+                pkgs.cmake
+                pkgs.ninja
+                pkgs.pkg-config
+
+                # touchHLE dependencies (dynamic/non-bundled builds)
+                pkgs.boost
+                pkgs.SDL2
+                pkgs.openal
+                pkgs.zlib
+              ]
+              ++ pkgs.lib.optionals isLinux [
+                (maybe [ "android-tools" ])
+                (maybe [ "android-studio" ])
+                (maybe [ "gnustepPackages" "base" ])
+                (maybe [ "gnustepPackages" "gui" ])
+                (maybe [ "libobjc2" ])
+              ]
+              ++ pkgs.lib.optionals isDarwin [
+                # Keep this minimal to avoid legacy apple_sdk compatibility
+                # attr issues on some nixpkgs revisions.
+              ]
+            );
+
+          shellHook = ''
+            export CC=${pkgs.clang}/bin/clang
+            export CXX=${pkgs.clang}/bin/clang++
+          '';
+        };
     in
     {
-      devShells.${system}.default = pkgs.mkShell {
-        # List of packages to be available in the shell
-        packages = with pkgs;
-          [
-          # Example packages: git and htop
-            rustc
-            cargo
-            gcc
-            androidndkPkgs_25.sdk
-            adb
-            android-studio
-            clang
-            pkg-config
-            gnustep.base
-            gnustep.gui
-            clangd
-          ]
-          ++ lib.optionals stdenv.isLinux [ libobjc2 ]
-          ++ lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Foundation ];
-        # Optional: Add a shell hook
-#        shellHook = ''
-#          export OBJCFLAGS="-I${pkgs.libobjc2}/include"
-#          export LDFLAGS="-L${pkgs.libobjc2}/lib -lobjc" 
-#        '';
+      devShells = forAllSystems (system: {
+        default = mkDevShell system;
+      });
     };
-  };
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleName</key>
+	<string>SpringBoard</string>
+	<key>CFBundleDisplayName</key>
+	<string>SpringBoard</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.pocketdarwin.SpringBoard</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFBundleExecutable</key>
+	<string>SpringBoard</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>MinimumOSVersion</key>
+	<string>2.0</string>
+</dict>
+</plist>

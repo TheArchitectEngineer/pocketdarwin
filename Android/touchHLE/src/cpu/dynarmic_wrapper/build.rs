@@ -32,8 +32,25 @@ fn build_type_windows() -> &'static str {
 fn main() {
     let package_root = Path::new(env!("CARGO_MANIFEST_DIR"));
     let workspace_root = package_root.join("../../..");
+    let dynarmic_root = workspace_root.join("vendor/dynarmic");
+    let dynarmic_cmake = dynarmic_root.join("CMakeLists.txt");
 
-    let mut build = cmake::Config::new(workspace_root.join("vendor/dynarmic"));
+    if !dynarmic_cmake.is_file() {
+        println!(
+            "cargo:warning=Missing dynarmic source at {}. Building fallback stub (CPU emulation disabled).",
+            dynarmic_cmake.display()
+        );
+        cc::Build::new()
+            .file(package_root.join("fallback.cpp"))
+            .cpp(true)
+            .std("c++17")
+            .compile("dynarmic_wrapper");
+        rerun_if_changed(&package_root.join("fallback.cpp"));
+        rerun_if_changed(&dynarmic_cmake);
+        return;
+    }
+
+    let mut build = cmake::Config::new(&dynarmic_root);
     build.define("DYNARMIC_FRONTENDS", "A32"); // We don't need 64-bit
     build.define("DYNARMIC_WARNINGS_AS_ERRORS", "OFF");
     build.define("DYNARMIC_TESTS", "OFF");
@@ -128,4 +145,6 @@ fn main() {
         .include(dynarmic_out.join("include"))
         .compile("dynarmic_wrapper");
     rerun_if_changed(&package_root.join("lib.cpp"));
+    rerun_if_changed(&package_root.join("fallback.cpp"));
+    rerun_if_changed(&dynarmic_cmake);
 }

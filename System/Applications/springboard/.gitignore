@@ -24,3 +24,8 @@ freeboard
 
 # macOS
 .DS_Store
+
+
+# binaries
+*.app
+SpringBoard

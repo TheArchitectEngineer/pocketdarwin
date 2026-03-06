@@ -49,6 +49,7 @@ extern "C" {
         mem: *mut touchHLE_Mem,
         ticks: Option<&mut u64>,
     ) -> i32;
+    pub fn touchHLE_DynarmicWrapper_is_stub(cpu: *const touchHLE_DynarmicWrapper) -> bool;
 
     pub fn touchHLE_DynarmicWrapper_Context_new() -> *mut Dynarmic_A32_Context;
     pub fn touchHLE_DynarmicWrapper_Context_delete(context: *mut Dynarmic_A32_Context);

@@ -18,7 +18,7 @@ pub fn main() {
     // Generate a list of dependencies with license and author information.
     // This is used in license.rs
 
-    let deps = get_dependencies_from_cargo_lock(
+    let deps = match get_dependencies_from_cargo_lock(
         Default::default(),
         GetDependenciesOpt {
             // The goal is to get a list of dependencies which are used in the
@@ -30,29 +30,42 @@ pub fn main() {
             direct_deps_only: false,
             root_only: false,
         },
-    )
-    .unwrap();
+    ) {
+        Ok(deps) => deps,
+        Err(err) => {
+            println!(
+                "cargo:warning=Failed to enumerate Rust dependency licenses from Cargo.lock: {err}"
+            );
+            Vec::new()
+        }
+    };
     let mut deps_string = String::new();
-    for dep in deps {
-        // Exclude internal packages, they all use the same license and are
-        // handled specially.
-        if dep.name.starts_with("touchHLE") {
-            continue;
-        }
+    if deps.is_empty() {
+        deps_string.push_str(
+            "Dependency license inventory unavailable in this build environment.\n",
+        );
+    } else {
+        for dep in deps {
+            // Exclude internal packages, they all use the same license and are
+            // handled specially.
+            if dep.name.starts_with("touchHLE") {
+                continue;
+            }
 
-        write!(&mut deps_string, "- {} version {}", dep.name, dep.version).unwrap();
-        if let Some(authors) = dep.authors {
-            let authors: Vec<&str> = authors.split('|').collect();
-            write!(&mut deps_string, " by {}", authors.join(", ")).unwrap();
-        } else {
-            write!(&mut deps_string, " (author unspecified)").unwrap();
+            write!(&mut deps_string, "- {} version {}", dep.name, dep.version).unwrap();
+            if let Some(authors) = dep.authors {
+                let authors: Vec<&str> = authors.split('|').collect();
+                write!(&mut deps_string, " by {}", authors.join(", ")).unwrap();
+            } else {
+                write!(&mut deps_string, " (author unspecified)").unwrap();
+            }
+            if let Some(license) = dep.license {
+                write!(&mut deps_string, ", licensed under {license}").unwrap();
+            } else {
+                panic!("Dependency {} has an unspecified license!", dep.name);
+            }
+            writeln!(&mut deps_string).unwrap();
         }
-        if let Some(license) = dep.license {
-            write!(&mut deps_string, ", licensed under {license}").unwrap();
-        } else {
-            panic!("Dependency {} has an unspecified license!", dep.name);
-        }
-        writeln!(&mut deps_string).unwrap();
     }
 
     std::fs::write(out_dir.join("rust_dependencies.txt"), deps_string).unwrap();
@@ -62,24 +75,35 @@ pub fn main() {
     // Summarise the licensing of Dynarmic
 
     let dynarmic_readme_path = package_root.join("vendor/dynarmic/README.md");
-    let dynarmic_readme = std::fs::read_to_string(&dynarmic_readme_path).unwrap();
-    rerun_if_changed(&dynarmic_readme_path);
     let dynarmic_license_path = package_root.join("vendor/dynarmic/LICENSE.txt");
-    let dynarmic_license = std::fs::read_to_string(&dynarmic_license_path).unwrap();
-    rerun_if_changed(&dynarmic_license_path);
+    if dynarmic_readme_path.exists() && dynarmic_license_path.exists() {
+        let dynarmic_readme = std::fs::read_to_string(&dynarmic_readme_path).unwrap();
+        rerun_if_changed(&dynarmic_readme_path);
+        let dynarmic_license = std::fs::read_to_string(&dynarmic_license_path).unwrap();
+        rerun_if_changed(&dynarmic_license_path);
 
-    // Attempt to support Windows where git autocrlf may confuse things.
-    let dynarmic_readme = dynarmic_readme.replace("\r\n", "\n");
-    let (_, dynarmic_legal) = dynarmic_readme.split_once("\nLegal\n-----\n").unwrap();
-    // Strip out the code block start and end lines. They're visual noise when
-    // displayed in ASCII and there's one of these that ends up as its own page
-    // in the license text viewer!
-    let dynarmic_legal = dynarmic_legal.replace("\n```\n", "\n");
-    let dynarmic_license_oneline =
-        "dynarmic is under a 0BSD license. See LICENSE.txt for more details.";
-    assert!(dynarmic_legal.contains(dynarmic_license_oneline));
-    let dynarmic_summary = dynarmic_legal.replace(dynarmic_license_oneline, &dynarmic_license);
-    std::fs::write(out_dir.join("dynarmic_license.txt"), dynarmic_summary).unwrap();
+        // Attempt to support Windows where git autocrlf may confuse things.
+        let dynarmic_readme = dynarmic_readme.replace("\r\n", "\n");
+        let (_, dynarmic_legal) = dynarmic_readme.split_once("\nLegal\n-----\n").unwrap();
+        // Strip out the code block start and end lines. They're visual noise when
+        // displayed in ASCII and there's one of these that ends up as its own page
+        // in the license text viewer!
+        let dynarmic_legal = dynarmic_legal.replace("\n```\n", "\n");
+        let dynarmic_license_oneline =
+            "dynarmic is under a 0BSD license. See LICENSE.txt for more details.";
+        assert!(dynarmic_legal.contains(dynarmic_license_oneline));
+        let dynarmic_summary = dynarmic_legal.replace(dynarmic_license_oneline, &dynarmic_license);
+        std::fs::write(out_dir.join("dynarmic_license.txt"), dynarmic_summary).unwrap();
+    } else {
+        println!(
+            "cargo:warning=Dynarmic vendor license files not found. Writing placeholder dynarmic_license.txt."
+        );
+        std::fs::write(
+            out_dir.join("dynarmic_license.txt"),
+            "Dynarmic source files are not present in this checkout.\n",
+        )
+        .unwrap();
+    }
 
     // libc++_shared.so has to be copied into the APK. See README of cargo-ndk.
     if std::env::var("CARGO_CFG_TARGET_OS").unwrap() == "android" {

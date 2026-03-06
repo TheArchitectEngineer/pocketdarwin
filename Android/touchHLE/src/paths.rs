@@ -51,6 +51,40 @@ fn get_macos_bundled_resources_path() -> Option<PathBuf> {
     }
 }
 
+#[cfg(not(target_os = "android"))]
+fn resource_base_paths() -> Vec<PathBuf> {
+    let mut bases: Vec<PathBuf> = Vec::new();
+
+    if let Some(base) = get_macos_bundled_resources_path() {
+        bases.push(base);
+    }
+
+    // Primary behavior: resources next to the current working directory.
+    bases.push(PathBuf::from("."));
+
+    // When running from target/debug/, resources usually sit a few levels up.
+    if let Ok(exe) = std::env::current_exe() {
+        if let Some(mut dir) = exe.parent().map(Path::to_path_buf) {
+            bases.push(dir.clone());
+            for _ in 0..3 {
+                if let Some(parent) = dir.parent() {
+                    dir = parent.to_path_buf();
+                    bases.push(dir.clone());
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+    // Dev-tree fallback path.
+    bases.push(PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+
+    bases.sort();
+    bases.dedup();
+    bases
+}
+
 /// Abstraction over a platform-specific type for accessing a resource bundled
 /// with touchHLE.
 pub struct ResourceFile {
@@ -61,21 +95,29 @@ pub struct ResourceFile {
 }
 impl ResourceFile {
     pub fn open(path: &str) -> Result<Self, String> {
-        Ok(Self {
-            // On Android, these resources are included as "assets" within the
-            // APK. We access them via SDL2's wrapper of Android's assets API.
-            #[cfg(target_os = "android")]
-            file: sdl2::rwops::RWops::from_file(path, "r")?,
+        // On Android, these resources are included as "assets" within the
+        // APK. We access them via SDL2's wrapper of Android's assets API.
+        #[cfg(target_os = "android")]
+        {
+            return Ok(Self {
+                file: sdl2::rwops::RWops::from_file(path, "r")?,
+            });
+        }
 
-            // On other OSes, resources are accessed as ordinary files.
-            #[cfg(not(target_os = "android"))]
-            file: {
-                let base_path = get_macos_bundled_resources_path();
-                // When not in a bundle, look in the current directory.
-                let path = base_path.as_deref().unwrap_or(Path::new(".")).join(path);
-                std::fs::File::open(path).map_err(|e| e.to_string())?
-            },
-        })
+        // On other OSes, resources are accessed as ordinary files.
+        #[cfg(not(target_os = "android"))]
+        {
+            let mut last_error = None;
+            for base in resource_base_paths() {
+                let candidate = base.join(path);
+                match std::fs::File::open(&candidate) {
+                    Ok(file) => return Ok(Self { file }),
+                    Err(err) => last_error = Some((candidate, err)),
+                }
+            }
+            let (candidate, err) = last_error.unwrap();
+            Err(format!("{}: {}", candidate.display(), err))
+        }
     }
     pub fn get(&mut self) -> &mut (impl Read + Seek) {
         &mut self.file

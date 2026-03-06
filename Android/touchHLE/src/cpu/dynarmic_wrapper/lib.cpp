@@ -343,6 +343,8 @@ std::int32_t touchHLE_DynarmicWrapper_run_or_step(DynarmicWrapper *cpu,
   return cpu->run_or_step(mem, ticks);
 }
 
+bool touchHLE_DynarmicWrapper_is_stub(const DynarmicWrapper *) { return false; }
+
 void *touchHLE_DynarmicWrapper_Context_new() {
   return (void *)new Dynarmic::A32::Context();
 }
