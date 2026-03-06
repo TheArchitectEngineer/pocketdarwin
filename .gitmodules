@@ -1,15 +1,2 @@
-[submodule "System/Boot/linuxTemp/busybox"]
-	path = System/Boot/linuxTemp/busybox
-	url = https://github.com/mirror/busybox
-[submodule "System/Boot/linuxTemp/qemu"]
-	path = System/Boot/linuxTemp/qemu
-	url = https://gitlab.com/qemu-project/qemu.git
-[submodule "System/Frameworks/L2DIOBridgeKit/Libraries/json"]
-	path = System/Frameworks/L2DIOBridgeKit/Libraries/json
-	url = https://github.com/nlohmann/json
-[submodule "System/Frameworks/GnuCoreFoundation"]
-	path = System/Frameworks/GnuCoreFoundation
-	url = https://github.com/gnustep/libs-corebase
-[submodule "System/darwinKernel/kext_tools"]
-	path = System/darwinKernel/kext_tools
-	url = https://github.com/apple-oss-distributions/kext_tools
+
+

@@ -1,0 +1,26 @@
+   Compiling touchHLE_version v0.2.3 (/home/milu/Projects/pocketdarwin/Android/touchHLE/src/version)
+   Compiling touchHLE_stb_image_wrapper v0.2.3 (/home/milu/Projects/pocketdarwin/Android/touchHLE/src/image/stb_image_wrapper)
+   Compiling touchHLE_dynarmic_wrapper v0.2.3 (/home/milu/Projects/pocketdarwin/Android/touchHLE/src/cpu/dynarmic_wrapper)
+   Compiling symphonia-format-wav v0.5.3
+error: failed to run custom build command for `touchHLE_stb_image_wrapper v0.2.3 (/home/milu/Projects/pocketdarwin/Android/touchHLE/src/image/stb_image_wrapper)`
+
+Caused by:
+  process didn't exit successfully: `/home/milu/Projects/pocketdarwin/Android/touchHLE/target/debug/build/touchHLE_stb_image_wrapper-e3fba35cd17b0288/build-script-build` (exit status: 101)
+  --- stderr
+
+  thread 'main' (12689) panicked at src/image/stb_image_wrapper/build.rs:18:9:
+  Missing stb source: expected /home/milu/Projects/pocketdarwin/Android/touchHLE/src/image/stb_image_wrapper/../../../vendor/stb/stb_image.h
+  touchHLE vendor sources are incomplete. Populate Android/touchHLE/vendor/stb (e.g. from a full checkout) and retry cargo build.
+  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+warning: build failed, waiting for other jobs to finish...
+error: failed to run custom build command for `touchHLE_dynarmic_wrapper v0.2.3 (/home/milu/Projects/pocketdarwin/Android/touchHLE/src/cpu/dynarmic_wrapper)`
+
+Caused by:
+  process didn't exit successfully: `/home/milu/Projects/pocketdarwin/Android/touchHLE/target/debug/build/touchHLE_dynarmic_wrapper-35d1b1adaaabd621/build-script-build` (exit status: 101)
+  --- stderr
+
+  thread 'main' (12690) panicked at src/cpu/dynarmic_wrapper/build.rs:39:9:
+  Missing dynarmic source: expected /home/milu/Projects/pocketdarwin/Android/touchHLE/src/cpu/dynarmic_wrapper/../../../vendor/dynarmic/CMakeLists.txt
+  touchHLE vendor sources are incomplete. Populate Android/touchHLE/vendor/dynarmic (e.g. from a full checkout) and retry cargo build.
+  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+warning: touchHLE_version@0.2.3: Cargo.toml version (v0.2.3) is not a prefix of `git describe` version (98044f6)!

@@ -1,4 +1,3 @@
-#!/usr/bin/env swift
 import Foundation
 
 struct Shell {
@@ -51,7 +50,7 @@ struct Paths {
         return URL(fileURLWithPath: cwd)
     }()
 
-    static let interludeDir = root.appendingPathComponent("System/Boot/interlude")
+//    static let interludeDir = root.appendingPathComponent("System/Boot/interlude")
     static let sdkScripts = root.appendingPathComponent("Developer/SDKs/scripts")
     static let installerProject = root.appendingPathComponent("Platform/macOS/Install PocketDarwin/Install PocketDarwin.xcodeproj")
     static let dmgScript = root.appendingPathComponent("scripts/make_dmg.sh")

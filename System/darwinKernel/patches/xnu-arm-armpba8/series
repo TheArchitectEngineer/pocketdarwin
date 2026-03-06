@@ -1,8 +1,0 @@
-0001-restore-stdint-header.patch
-0002-mig-destroy-from-kernel-compat.patch
-0003-arm-modern-clang-compat.patch
-0004-missing-prototypes-compat.patch
-0005-signature-fixes-and-fallbacks.patch
-0006-arm-kernel-prototype-and-vmoffset-fixes.patch
-0007-arm-build-wip-through-assembler-stage.patch
-0008-add-generic-machine-configs.patch
