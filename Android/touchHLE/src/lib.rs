@@ -49,7 +49,9 @@ mod mem;
 mod objc;
 mod options;
 mod paths;
+pub mod systembundle;
 mod stack;
+pub mod vfs;
 mod window;
 
 // Environment is used very frequently used and used to be in this module, so

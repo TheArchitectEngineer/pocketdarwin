@@ -1,22 +1,16 @@
-CC ?= clang
-AS ?= as
+SYSTEM_NAME = PocketDarwin
+SYSTEM_VERSION = 1.0
+SYSTEM_ARCH = armv7
+SYSTEM_TYPE = Base
+SYSTEM_CONTENTS_DIR = build/Staging/System
+DATA_CONTENTS_DIR = build/Staging/Data
 
-SDKROOT := $(shell xcrun --show-sdk-path)
-TARGETMK := scripts/mktarget
-XNUKERNELSRC := $(PWD)/darwinKernel/xnu-arm
-LINUXKERNELSRC ?= Boot/linuxTemp/android_kernel_$(MANUFACTURER)_$(DEVICE)
+APPS_SRC := Applications
 
-MANUFACTURER ?= none
-DEVICE ?= ibroke
+# System apps
 
-RELEASETYPE ?= DEBUG
+springboard:
+	$(MAKE) -C $(APPS_SRC)/springboard
+	ls -l $(APPS_SRC)/springboard/SpringBoard.app
 
-$(PATCHESPATH) := $(PWD)/darwinKernel/patches
-
-export SDKROOT
-
-harpia:
-	$(MAKE) -C $(XNUKERNELSRC) TARGET_CONFIGS="$(RELEASETYPE) arm ARMPBA8"
-	$(MAKE) -C $(LINUXKERNELSRC) ARCH="arm"
-	@echo "darwinkernelbin='$XNUSource/build/arm/kernel'; linuxkernelbin=none" > kernelconfig
-
+include $(SRCROOT)/Frameworks/MakeKit/makefiles/systemBundle.mk
