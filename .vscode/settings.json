@@ -1,4 +1,5 @@
 {
     "makefile.configureOnOpen": true,
-    "cmake.sourceDirectory": "/Volumes/FileSystemMac/Developer/Projects/PocketDarwin/System"
+    "cmake.sourceDirectory": "${workspaceFolder}/System",
+    "C_Cpp.default.configuration": "PocketDarwin iPhoneOS"
 }
