@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+	<key>Identifier</key>
+	<string>org.pocketdarwin.dt.unit.systemBundle</string>
+	<key>Ancestors</key>
+	<array>
+		<string>com.apple.dt.unit.bundleBase</string>
+		<string>com.apple.dt.unit.osxBase</string>
+	</array>
+	<key>Concrete</key>
+	<true/>
+	<key>Description</key>
+	<string>Builds a PocketDarwin System Bundle for packaging executables, libraries, and configuration files.</string>
+	<key>SortOrder</key>
+	<integer>1</integer>
+	<key>Image</key>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.dt.IDEKit</string>
+		<key>BundleImageName</key>
+		<string>bundle</string>
+	</dict>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Identifier</key>
+			<string>bundleExtension</string>
+			<key>Name</key>
+			<string>Bundle Extension:</string>
+			<key>Description</key>
+			<string>Path extension used by the generated system bundle.</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>Default</key>
+			<string>System</string>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>installPath</string>
+			<key>Name</key>
+			<string>Install Path:</string>
+			<key>Description</key>
+			<string>Install location for the built system bundle.</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>Default</key>
+			<string>$(LOCAL_LIBRARY_DIR)/PocketDarwin/SystemBundles</string>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>payloadScaffold</string>
+			<key>Name</key>
+			<string>Starter Layout:</string>
+			<key>Description</key>
+			<string>Choose whether to include sample bundle content placeholders.</string>
+			<key>Type</key>
+			<string>popup</string>
+			<key>Default</key>
+			<string>Config + Payload Placeholders</string>
+			<key>Values</key>
+			<array>
+				<string>Config + Payload Placeholders</string>
+				<string>None</string>
+			</array>
+			<key>Units</key>
+			<dict>
+				<key>Config + Payload Placeholders</key>
+				<array>
+					<dict>
+						<key>Definitions</key>
+						<dict>
+							<key>SystemBundle.plist</key>
+							<dict>
+								<key>Path</key>
+								<string>SystemBundle.plist</string>
+							</dict>
+							<key>Executables/README.txt</key>
+							<dict>
+								<key>Path</key>
+								<string>Executables-README.txt</string>
+							</dict>
+							<key>Libraries/README.txt</key>
+							<dict>
+								<key>Path</key>
+								<string>Libraries-README.txt</string>
+							</dict>
+						</dict>
+						<key>Nodes</key>
+						<array>
+							<string>SystemBundle.plist</string>
+							<string>Executables/README.txt</string>
+							<string>Libraries/README.txt</string>
+						</array>
+					</dict>
+				</array>
+				<key>None</key>
+				<array>
+					<dict/>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>Targets</key>
+	<array>
+		<dict>
+			<key>TargetIdentifier</key>
+			<string>com.apple.dt.bundleTarget</string>
+			<key>ProductType</key>
+			<string>com.apple.product-type.bundle</string>
+			<key>BuildPhases</key>
+			<array>
+				<dict>
+					<key>Class</key>
+					<string>Resources</string>
+				</dict>
+			</array>
+			<key>SharedSettings</key>
+			<dict>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>INFOPLIST_KEY_NSHumanReadableCopyright</key>
+				<string>___COPYRIGHT___</string>
+				<key>INSTALL_PATH</key>
+				<string>___VARIABLE_installPath___</string>
+				<key>SKIP_INSTALL</key>
+				<string>NO</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>___VARIABLE_bundleExtension___</string>
+			</dict>
+		</dict>
+	</array>
+	<key>Nodes</key>
+	<array/>
+</dict>
+</plist>
