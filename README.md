@@ -32,12 +32,12 @@ This is an active hacking project, not a finished product.
 
 If you’re new, start here:
 
-- `System/` → boot/platform code and system apps (including SpringBoard work)
-- `Frameworks/` → core frameworks + build helpers (`MakeKit`, `TerminalKit`, etc.)
-- `Developer/` → SDKs, toolchains, and scripts for developer workflows
-- `BuildSystem/` → build orchestration pieces
-- `Android/` → Android-side experiments/integration projects
-- `Tools/` → utility tools used by the project
+- [`System/`](System/) → boot/platform code and system apps (including SpringBoard work)
+- [`Frameworks/`](Frameworks/) → core frameworks + build helpers (`MakeKit`, `TerminalKit`, etc.)
+- [`Developer/`](Developer/) → SDKs, toolchains, and scripts for developer workflows
+- [`BuildSystem/`](BuildSystem/) → build orchestration pieces
+- [`Android/`](Android/) → Android-side experiments/integration projects
+- [`Tools/`](Tools/) → utility tools used by the project
 
 ---
 
