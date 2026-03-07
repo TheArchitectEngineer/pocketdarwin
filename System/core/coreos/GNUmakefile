@@ -1,15 +1,15 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-LIBRARY_NAME = CoreOS
+FRAMEWORK_NAME = CoreOS
 
-CoreOS_OBJC_FILES = \
+${FRAMEWORK_NAME}_OBJC_FILES = \
     FDSystem.m \
     FDUserSession.m \
     FDProcessInfo.m \
     FDFileSystem.m \
     FDServiceManager.m
 
-CoreOS_HEADER_FILES = \
+${FRAMEWORK_NAME}_HEADER_FILES = \
     CoreOS.h \
     FDCompatibility.h \
     FDSystem.h \
@@ -18,9 +18,9 @@ CoreOS_HEADER_FILES = \
     FDFileSystem.h \
     FDServiceManager.h
 
-CoreOS_INSTALL_DIR = $(GNUSTEP_LOCAL_LIBRARY)/Frameworks
+${FRAMEWORK_NAME}_INSTALL_DIR = $(GNUSTEP_LOCAL_LIBRARY)/Frameworks
 
-include $(GNUSTEP_MAKEFILES)/library.make
+include $(GNUSTEP_MAKEFILES)/framework.make
 
 TOOL_NAME = coreosctl
 

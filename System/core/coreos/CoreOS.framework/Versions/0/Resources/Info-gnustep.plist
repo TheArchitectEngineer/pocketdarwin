@@ -1,0 +1,9 @@
+{
+  NOTE = "Automatically generated, do not edit!";
+  NSExecutable = "CoreOS";
+  NSMainNibFile = "";
+  NSPrincipalClass = "CoreOS";
+  Classes = 
+("FDSystem", "FDUserSession", "FDProcessInfo", "FDFileSystem", "FDServiceManager")
+  ;
+}

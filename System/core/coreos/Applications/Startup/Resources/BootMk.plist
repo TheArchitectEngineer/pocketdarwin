@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleDisplayName</key>
+    <string>System Startup</string>
+    <key>CFBundleExecutable</key>
+    <string>SystemStartup</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.pocketdarwin.SystemStartup</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>SystemStartup</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>UIStatusBarHidden</key>
+    <false/>
+
+    <key>StartupSearchPaths</key>
+    <array>
+        <string>/System/Library/CoreServices</string>
+        <string>/Applications</string>
+    </array>
+    <key>StartupBundlePaths</key>
+    <array>
+        <string>/System/Library/CoreServices/SpringBoard.app</string>
+        <string>/Applications/Settings.app</string>
+        <string>/Applications/MobileTerminal.app</string>
+    </array>
+    <key>StartupPreferredBundleIdentifier</key>
+    <string>com.pocketdarwin.SpringBoard</string>
+</dict>
+</plist>
