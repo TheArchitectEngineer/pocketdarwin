@@ -1,17 +1,37 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
-# The name of your executable
-TOOL_NAME = CoreOS
+LIBRARY_NAME = CoreOS
 
-# The list of Objective-C source files
-CoreOS_OBJC_FILES = main.m \
-					FDSystem.m \
-					FDUser.m \
-					FDUserSession.m \
-					FDUtsname.m \
-					FDTuxedo.m \
-					SystemTypeIdner.m \
-					libSystemGrepper.m
+CoreOS_OBJC_FILES = \
+    FDSystem.m \
+    FDUserSession.m \
+    FDProcessInfo.m \
+    FDFileSystem.m \
+    FDServiceManager.m
 
-# Include the rules for command-line tools
+CoreOS_HEADER_FILES = \
+    CoreOS.h \
+    FDCompatibility.h \
+    FDSystem.h \
+    FDUserSession.h \
+    FDProcessInfo.h \
+    FDFileSystem.h \
+    FDServiceManager.h
+
+CoreOS_INSTALL_DIR = $(GNUSTEP_LOCAL_LIBRARY)/Frameworks
+
+include $(GNUSTEP_MAKEFILES)/library.make
+
+TOOL_NAME = coreosctl
+
+coreosctl_OBJC_FILES = \
+    main.m \
+    FDSystem.m \
+    FDUserSession.m \
+    FDProcessInfo.m \
+    FDFileSystem.m \
+    FDServiceManager.m
+
+coreosctl_TOOL_LIBS = -lobjc -lgnustep-base
+
 include $(GNUSTEP_MAKEFILES)/tool.make
