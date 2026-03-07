@@ -98,4 +98,4 @@ If you had to reverse-engineer how something works, write it down for the next p
 
 ## ⚖️ License
 
-See `LICENSE` for project licensing.
+See [`LICENSE`](LICENSE) for project licensing.
