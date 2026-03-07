@@ -20,6 +20,7 @@ PDPACK_DIR := Tools/pdpack
 ISTDLIB_DIR := istdlib
 SYSTEM_DIR := System
 SYSTEM_TARGET ?= harpia
+SYSTEM_BUNDLE_FLAGS ?=
 
 .PHONY: help
 help:
@@ -46,7 +47,8 @@ help:
 		'  rust                 Build all Rust crates' \
 		'  rust-check           cargo check for Rust crates' \
 		'  rust-test            cargo test for Rust crates' \
-		'  system               Build System target (SYSTEM_TARGET=<name>, default harpia)'
+		'  system               Build System target (SYSTEM_TARGET=<name>, default harpia)' \
+		'  system-bundle        Build and package .System bundle (uses BuildSystem/pdbuild.swift)'
 
 .PHONY: build
 build: android rust
@@ -125,6 +127,11 @@ rust-clean:
 .PHONY: system
 system:
 	@$(MAKE) -C $(SYSTEM_DIR) $(SYSTEM_TARGET)
+
+
+.PHONY: system-bundle
+system-bundle:
+	@./BuildSystem/pdbuild.swift system-bundle $(SYSTEM_BUNDLE_FLAGS)
 
 .PHONY: system-clean
 system-clean:
