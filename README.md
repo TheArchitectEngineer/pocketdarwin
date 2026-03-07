@@ -46,23 +46,23 @@ If you’re new, start here:
 ### 1) I just want to understand the build system
 Read:
 
-- `BuildSystem/README.md`
+- [`BuildSystem/README.md`](BuildSystem/README.md)
 
 ### 2) I want SDK/toolchain details
 Read:
 
-- `Developer/SDKs/README.md`
-- `Developer/common-3.0-sdk/README.md`
+- [`Developer/SDKs/README.md`](Developer/SDKs/README.md)
+- [`Developer/common-3.0-sdk/README.md`](Developer/common-3.0-sdk/README.md)
 
 ### 3) I want to poke around SpringBoard/app code
 Start in:
 
-- `System/Applications/springboard/`
+- [`System/Applications/springboard/`](System/Applications/springboard/)
 
 ### 4) I want to hack utilities
 Start in:
 
-- `Tools/pdpack/`
+- [`Tools/pdpack/`](Tools/pdpack/)
 
 ---
 
